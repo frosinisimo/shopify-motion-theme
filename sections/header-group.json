@@ -27,7 +27,8 @@
         "mobile_logo_width": 130,
         "main_menu_link_list": "main-menu",
         "hover_menu": true,
-        "main_menu_alignment": "center-left",
+        "main_menu_alignment": "left",
+        "mobile_menu_alignment": "center-left",
         "header_sticky": true,
         "sticky_index": false,
         "sticky_collection": true

@@ -6,6 +6,11 @@
     assign logo_alignment = 'center'
   endif
 
+  assign mobile_logo_alignment = 'left'
+  if section.settings.mobile_menu_alignment == 'center-left' or section.settings.mobile_menu_alignment == 'center-split' or section.settings.mobile_menu_alignment == 'center' or section.settings.mobile_menu_alignment == 'center-drawer'
+    assign mobile_logo_alignment = 'center'
+  endif
+
   assign template_name = template | replace: '.', ' ' | truncatewords: 2, '' | handle
 
   assign sticky_header = false
@@ -23,7 +28,7 @@
   endif
 -%}
 
-{%- render 'drawer-menu', section: section, main_menu: main_menu, logo_alignment: logo_alignment -%}
+{%- render 'drawer-menu', section: section, main_menu: main_menu, logo_alignment: mobile_logo_alignment -%}
 {%- render 'cart-drawer' -%}
 
 {%- style -%}
@@ -45,6 +50,55 @@
       border-bottom-color: {{ settings.color_borders }};
     }
   {%- endif -%}
+
+  /* Mobile-specific layout adjustments */
+  @media only screen and (max-width: 768px) {
+    /* Hide desktop-specific elements */
+    .header-layout--{{ section.settings.main_menu_alignment }} .header-item--navigation.medium-down--hide {
+      display: none !important;
+    }
+
+    /* Mobile center logo layouts */
+    {%- if mobile_logo_alignment == 'center' -%}
+      .header-layout--mobile-{{ section.settings.mobile_menu_alignment }} .header-layout {
+        position: relative;
+      }
+
+      .header-layout--mobile-{{ section.settings.mobile_menu_alignment }} .header-item--logo {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+      }
+
+      .header-layout--mobile-{{ section.settings.mobile_menu_alignment }} .header-item--left {
+        justify-content: flex-start;
+      }
+
+      .header-layout--mobile-{{ section.settings.mobile_menu_alignment }} .header-item--icons {
+        justify-content: flex-end;
+      }
+    {%- endif -%}
+
+    /* Mobile drawer button positioning */
+    {%- if section.settings.mobile_menu_alignment contains 'drawer' -%}
+      .header-layout--mobile-{{ section.settings.mobile_menu_alignment }} .js-drawer-open-nav {
+        display: inline-flex !important;
+      }
+    {%- else -%}
+      .header-layout--mobile-{{ section.settings.mobile_menu_alignment }} .js-drawer-open-nav {
+        display: none !important;
+      }
+    {%- endif -%}
+  }
+
+  /* Desktop layout preservation */
+  @media only screen and (min-width: 769px) {
+    /* Hide mobile-specific elements */
+    .mobile-nav-trigger {
+      display: none !important;
+    }
+  }
 {%- endstyle -%}
 
 <div data-section-id="{{ section.id }}" data-section-type="header">
@@ -56,7 +110,7 @@
       data-overlay="{{ overlay_header }}">
       <div class="page-width">
         <div
-          class="header-layout header-layout--{{ section.settings.main_menu_alignment }}"
+          class="header-layout header-layout--{{ section.settings.main_menu_alignment }} header-layout--mobile-{{ section.settings.mobile_menu_alignment }}"
           data-logo-align="{{ logo_alignment }}">
 
           {%- if logo_alignment == 'left' -%}
@@ -66,7 +120,7 @@
           {%- endif -%}
 
           {%- if logo_alignment == 'left' and section.settings.main_menu_alignment != 'left-drawer' -%}
-            <div class="header-item header-item--navigation{% if section.settings.main_menu_alignment == 'left-center' %} text-center{% endif %}" role="navigation" aria-label="Primary">
+            <div class="header-item header-item--navigation{% if section.settings.main_menu_alignment == 'left-center' %} text-center{% endif %} medium-down--hide" role="navigation" aria-label="Primary">
               {%- render 'header-desktop-nav', section: section, main_menu: main_menu, hover_menu: section.settings.hover_menu -%}
             </div>
           {%- endif -%}
@@ -85,10 +139,26 @@
               {%- endif -%}
 
               {%- if section.settings.main_menu_alignment == 'center-left' -%}
-                {%- render 'header-desktop-nav', section: section, main_menu: main_menu, hover_menu: section.settings.hover_menu -%}
+                <div class="medium-down--hide">
+                  {%- render 'header-desktop-nav', section: section, main_menu: main_menu, hover_menu: section.settings.hover_menu -%}
+                </div>
               {%- endif -%}
 
-              <div class="site-nav{% unless section.settings.main_menu_alignment == 'center-drawer' %} large-up--hide{% endunless %}">
+              {%- comment -%} Mobile navigation button for center layouts {%- endcomment -%}
+              {%- if mobile_logo_alignment == 'center' -%}
+                <div class="site-nav large-up--hide mobile-nav-trigger">
+                  <button
+                    type="button"
+                    class="site-nav__link site-nav__link--icon js-drawer-open-nav"
+                    aria-controls="NavDrawer">
+                    <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-hamburger" viewBox="0 0 64 64"><title>icon-hamburger</title><path d="M7 15h51M7 32h43M7 49h51"/></svg>
+                    <span class="icon__fallback-text">{{ 'general.drawers.navigation' | t }}</span>
+                  </button>
+                </div>
+              {%- endif -%}
+
+              {%- comment -%} Desktop drawer button {%- endcomment -%}
+              <div class="site-nav{% unless section.settings.main_menu_alignment == 'center-drawer' %} large-up--hide{% endunless %}{% if mobile_logo_alignment == 'center' %} medium-down--hide{% endif %}">
                 <button
                   type="button"
                   class="site-nav__link site-nav__link--icon js-drawer-open-nav"
@@ -100,10 +170,8 @@
             </div>
 
             {%- if section.settings.main_menu_alignment == 'center-split' -%}
-              {%- render 'header-split-nav', main_menu: main_menu, section: section, hover_menu: section.settings.hover_menu-%}
-            {%- endif -%}
-
-            {%- if section.settings.main_menu_alignment != 'center-split' -%}
+              {%- render 'header-split-nav', main_menu: main_menu, section: section, hover_menu: section.settings.hover_menu -%}
+            {%- elsif section.settings.main_menu_alignment != 'center-split' -%}
               <div class="header-item header-item--logo">
                 {%- render 'header-logo-block', section: section -%}
               </div>
@@ -111,12 +179,12 @@
           {%- endif -%}
 
           <div class="header-item header-item--icons">
-            {%- render 'header-icons', section: section -%}
+            {%- render 'header-icons', section: section, mobile_menu_alignment: section.settings.mobile_menu_alignment -%}
           </div>
         </div>
 
         {%- if section.settings.main_menu_alignment == 'center' -%}
-          <div class="text-center" role="navigation" aria-label="Primary">
+          <div class="text-center medium-down--hide" role="navigation" aria-label="Primary">
             {%- render 'header-desktop-nav', section: section, main_menu: main_menu, hover_menu: section.settings.hover_menu -%}
           </div>
         {%- endif -%}
@@ -199,9 +267,13 @@
       "default": true
     },
     {
+      "type": "header",
+      "content": "Layout Desktop"
+    },
+    {
       "type": "select",
       "id": "main_menu_alignment",
-      "label": "t:sections.header.settings.main_menu_alignment.label",
+      "label": "Layout menu desktop",
       "default": "left-center",
       "options": [
         {
@@ -235,6 +307,46 @@
       ]
     },
     {
+      "type": "header",
+      "content": "Layout Mobile"
+    },
+    {
+      "type": "select",
+      "id": "mobile_menu_alignment",
+      "label": "Layout menu mobile",
+      "default": "left-drawer",
+      "options": [
+        {
+          "value": "left",
+          "label": "Logo sinistra, menu sinistra"
+        },
+        {
+          "value": "left-center",
+          "label": "Logo sinistra, menu centro"
+        },
+        {
+          "value": "left-drawer",
+          "label": "Logo sinistra, menu drawer"
+        },
+        {
+          "value": "center-left",
+          "label": "Logo centro, menu sinistra"
+        },
+        {
+          "value": "center",
+          "label": "Logo centro, menu centro"
+        },
+        {
+          "value": "center-drawer",
+          "label": "Logo centro, menu drawer"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Sticky header"
+    },
+    {
       "type": "checkbox",
       "id": "header_sticky",
       "label": "t:sections.header.settings.header_sticky.label",
@@ -250,13 +362,12 @@
       "type": "checkbox",
       "id": "sticky_collection",
       "label": "t:sections.header.settings.sticky_collection.label",
-      "info": "t:sections.header.settings.sticky_collection.info",
       "default": false
     }
   ],
   "blocks": [
     {
-      "type": "megamenu",
+      "type": "mega_menu",
       "name": "t:sections.header.blocks.mega_menu.name",
       "settings": [
         {
@@ -315,9 +426,6 @@
         }
       ]
     }
-  ],
-  "default": {
-    "settings": {}
-  }
+  ]
 }
 {% endschema %}

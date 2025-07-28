@@ -212,8 +212,9 @@
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
     -ms-overflow-style: none;
-    padding: 20px 10px 40px; /* Extra padding bottom for popup */
+    padding: 20px {{ section.settings.desktop_padding_left }}px 40px; /* Extra padding bottom for popup */
   }
+
 
   /* Override page-width padding on mobile */
   @media screen and (max-width: 768px) {
@@ -325,20 +326,7 @@
     background: linear-gradient(135deg, {{ section.settings.placeholder_color_1 }} 0%, {{ section.settings.placeholder_color_2 }} 100%);
   }
 
-  /* Link icon */
-  #shopify-section-{{ section.id }} .pr-story-link-icon {
-    position: absolute;
-    bottom: 5px;
-    right: 5px;
-    width: 24px;
-    height: 24px;
-    background: rgba(0, 0, 0, 0.7);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #fff;
-  }
+  
 
   #shopify-section-{{ section.id }} .pr-story-title {
     font-size: {{ section.settings.title_size }}px;
@@ -357,7 +345,7 @@
   {% if section.settings.enable_hover_popup %}
   #shopify-section-{{ section.id }} .pr-story-popup-container {
     position: absolute;
-    bottom: 100%;
+    bottom: 72%;
     left: 50%;
     transform: translateX(-50%);
     padding-bottom: 10px;
@@ -1340,6 +1328,20 @@ document.addEventListener('DOMContentLoaded', function() {
       "min": 0,
       "max": 50,
       "step": 1,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Padding Desktop"
+    },
+    {
+      "type": "range",
+      "id": "desktop_padding_left",
+      "label": "Padding desktop",
+      "default": 10,
+      "min": 0,
+      "max": 500,
+      "step": 10,
       "unit": "px"
     },
     {
