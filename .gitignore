@@ -1,0 +1,7 @@
+ 
+config/settings_data.json
+.shopifyignore
+node_modules/
+.DS_Store
+*.log
+.env
