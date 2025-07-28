@@ -9,45 +9,162 @@
  */
 {
   "sections": {
-    "fading-images": {
-      "type": "fading-images",
+    "tiktok_stories_7cJy8q": {
+      "type": "tiktok-stories",
       "blocks": {
-        "image-1": {
-          "type": "image",
+        "story_RTfDGc": {
+          "type": "story",
           "settings": {
-            "slide_title1": "For the explorers.",
-            "slide_title2": ""
+            "story_title": "Nuovi Charm",
+            "cover_image": "shopify://shop_images/458396257_532038849243302_6792501506712993303_n.jpg",
+            "story_type": "video",
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/63d549fa92f5475e8f6aa60314f10d17.mp4",
+            "link_url": "",
+            "auto_duration": true,
+            "has_new_content": true,
+            "ring_color": "#d75c6c",
+            "popup_text": "",
+            "cta_text": "Scopri collezione",
+            "cta_link": "shopify://collections/all"
           }
         },
-        "image-2": {
-          "type": "image",
+        "story_6fCp3B": {
+          "type": "story",
           "settings": {
-            "slide_title1": "The adventurous.",
-            "slide_title2": ""
+            "story_title": "Il nostro negozio",
+            "cover_image": "shopify://shop_images/453812655_1538245877107350_745914952647272547_n.jpg",
+            "story_type": "image",
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/63d549fa92f5475e8f6aa60314f10d17.mp4",
+            "image_url": "shopify://shop_images/cpb-test-task--_6VwQ-HIO0QWAUIEPJ6XIQdL.png",
+            "link_url": "",
+            "auto_duration": true,
+            "has_new_content": true,
+            "ring_color": "#f3a2a5",
+            "popup_text": "Vieni a trovarci nel cuore di Roma",
+            "cta_text": "Visitaci",
+            "cta_link": "shopify://pages/contact"
           }
         },
-        "image-3": {
-          "type": "image",
+        "story_mrR84D": {
+          "type": "story",
           "settings": {
-            "slide_title1": "And the fearless.",
-            "slide_title2": ""
+            "story_title": "Il nostro negozio",
+            "cover_image": "shopify://shop_images/453812655_1538245877107350_745914952647272547_n.jpg",
+            "story_type": "link",
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/63d549fa92f5475e8f6aa60314f10d17.mp4",
+            "link_url": "shopify://products/demo-t-shirt-automatic-recoloring-out-of-stock-test-product",
+            "auto_duration": true,
+            "has_new_content": true,
+            "ring_color": "#f3a2a5",
+            "popup_text": "Vieni a trovarci nel cuore di Roma",
+            "cta_text": "Visitaci",
+            "cta_link": ""
+          }
+        },
+        "story_rtkMik": {
+          "type": "story",
+          "settings": {
+            "story_title": "Il nostro negozio",
+            "cover_image": "shopify://shop_images/453812655_1538245877107350_745914952647272547_n.jpg",
+            "story_type": "video",
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/63d549fa92f5475e8f6aa60314f10d17.mp4",
+            "link_url": "",
+            "auto_duration": true,
+            "has_new_content": true,
+            "ring_color": "#f3a2a5",
+            "popup_text": "Vieni a trovarci nel cuore di Roma",
+            "cta_text": "Visitaci",
+            "cta_link": ""
+          }
+        },
+        "story_TTpWb4": {
+          "type": "story",
+          "settings": {
+            "story_title": "Il nostro negozio",
+            "cover_image": "shopify://shop_images/453812655_1538245877107350_745914952647272547_n.jpg",
+            "story_type": "video",
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/63d549fa92f5475e8f6aa60314f10d17.mp4",
+            "link_url": "",
+            "auto_duration": true,
+            "has_new_content": true,
+            "ring_color": "#f3a2a5",
+            "popup_text": "Vieni a trovarci nel cuore di Roma",
+            "cta_text": "Visitaci",
+            "cta_link": ""
+          }
+        },
+        "story_WhQKdC": {
+          "type": "story",
+          "settings": {
+            "story_title": "Il nostro negozio",
+            "cover_image": "shopify://shop_images/453812655_1538245877107350_745914952647272547_n.jpg",
+            "story_type": "video",
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/63d549fa92f5475e8f6aa60314f10d17.mp4",
+            "link_url": "",
+            "auto_duration": true,
+            "has_new_content": true,
+            "ring_color": "#f3a2a5",
+            "popup_text": "Vieni a trovarci nel cuore di Roma",
+            "cta_text": "Visitaci",
+            "cta_link": ""
           }
         }
       },
       "block_order": [
-        "image-1",
-        "image-2",
-        "image-3"
+        "story_RTfDGc",
+        "story_6fCp3B",
+        "story_mrR84D",
+        "story_rtkMik",
+        "story_TTpWb4",
+        "story_WhQKdC"
       ],
+      "name": "TikTok Stories",
       "settings": {
-        "title_lines": "1",
-        "title_font": "heading",
-        "title_size": 100,
-        "slide_speed": 3,
-        "color_overlay": "#000000",
-        "color_overlay_opacity": 14,
-        "desktop_height": "100vh",
-        "mobile_height": "100vh"
+        "heading": "",
+        "heading_size": "h2",
+        "heading_position": "center",
+        "fullwidth": true,
+        "stories_layout": "centered",
+        "mobile_padding_left": 0,
+        "mobile_padding_right": 0,
+        "background_color": "#fff5ea",
+        "text_color": "#3e491c",
+        "border_color": "#fff5ea",
+        "border_hover_color": "#f3a2a5",
+        "disable_hover_effect": false,
+        "placeholder_color_1": "#fadada",
+        "placeholder_color_2": "#f3a2a5",
+        "enable_hover_popup": true,
+        "popup_bg_color": "#3e491c",
+        "popup_text_color": "#ffffff",
+        "story_size": 80,
+        "story_gap": 16,
+        "title_size": 16,
+        "title_spacing": 16,
+        "story_size_mobile": 65,
+        "story_gap_mobile": 12,
+        "title_size_mobile": 11,
+        "story_duration": 15,
+        "arrow_style": "subtle",
+        "cta_style_type": "custom",
+        "cta_custom_bg": "#3e491c",
+        "cta_custom_text_color": "#ffffff",
+        "cta_custom_font_size": 16,
+        "cta_custom_font_weight": "500",
+        "cta_custom_padding": 12,
+        "cta_custom_radius": 8,
+        "cta_custom_position": 100,
+        "nascondi_mobile": false,
+        "nascondi_desktop": false,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0,
+        "padding_top_desktop": 0,
+        "padding_bottom_desktop": 0,
+        "margin_top_mobile": -10,
+        "margin_bottom_mobile": 0,
+        "margin_top_desktop": -32,
+        "margin_bottom_desktop": 0,
+        "max_dimensione": "none"
       }
     },
     "featured-collection-switcher": {
@@ -55,27 +172,40 @@
       "settings": {
         "title": "Top picks",
         "collection1": "mens",
-        "collection2": "womens"
+        "collection2": "womens",
+        "per_row": 4,
+        "view_all": true,
+        "divider": false
       }
     },
     "collection-callout": {
       "type": "collection-callout",
       "settings": {
+        "collection": "",
+        "subtitle": "Brand new",
         "title": "Summer wear",
         "text": "Check out our comfy crewnecks, lightweight khakis, breathable tanktops and more.",
         "cta_text1": "Shop Tops",
-        "cta_text2": "Shop All Womens"
+        "cta_link1": "",
+        "cta_text2": "Shop All Womens",
+        "cta_link2": "",
+        "layout": "right",
+        "divider": false
       }
     },
     "hero-video": {
       "type": "hero-video",
       "settings": {
         "title": "Into the wild.",
+        "title_size": 80,
         "subheading": "",
         "link_text": "Watch",
         "link": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+        "text_align": "vertical-center horizontal-center",
         "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
-        "section_height": "550px"
+        "overlay_opacity": 0,
+        "section_height": "550px",
+        "mobile_height": "auto"
       }
     },
     "rich-text": {
@@ -84,11 +214,14 @@
         "heading": {
           "type": "heading",
           "disabled": true,
-          "settings": {}
+          "settings": {
+            "title": "Rich text"
+          }
         },
         "text": {
           "type": "text",
           "settings": {
+            "enlarge_text": true,
             "text": "<p>We design durable travel apparel with a conscience — 100% made in America. <br/>Products by <a href=\"http://unitedbyblue.com\" title=\"http://unitedbyblue.com\">United By Blue</a>."
           }
         }
@@ -97,16 +230,30 @@
         "heading",
         "text"
       ],
-      "settings": {}
+      "settings": {
+        "align_text": "center",
+        "narrow_column": true,
+        "divider": false
+      }
     },
     "text-and-image": {
       "type": "text-and-image",
       "settings": {
+        "image_mask": "none",
+        "image2_mask": "none",
         "subtitle": "Gift cards",
         "title": "Support your neighborhood",
         "text": "<p>We believe that local businesses are an integral part of a neighborhood's character. Help keep us local by buying a gift card!</p>",
         "button_label": "Shop gift cards",
-        "image_width": "66"
+        "button_link": "",
+        "button_style": "primary",
+        "align_text": "left",
+        "image_width": "66",
+        "layout": "right",
+        "divider": false,
+        "top_padding": true,
+        "bottom_padding": true,
+        "lazyload_images": true
       }
     },
     "featured-collections": {
@@ -115,28 +262,48 @@
         "collection-1": {
           "type": "collection",
           "settings": {
+            "collection": "",
+            "focal_point": "center center",
             "size": "wide"
           }
         },
         "collection-2": {
           "type": "collection",
-          "settings": {}
+          "settings": {
+            "collection": "",
+            "focal_point": "center center",
+            "size": "square-small"
+          }
         },
         "collection-3": {
           "type": "collection",
-          "settings": {}
+          "settings": {
+            "collection": "",
+            "focal_point": "center center",
+            "size": "square-small"
+          }
         },
         "collection-4": {
           "type": "collection",
-          "settings": {}
+          "settings": {
+            "collection": "",
+            "focal_point": "center center",
+            "size": "square-small"
+          }
         },
         "collection-5": {
           "type": "collection",
-          "settings": {}
+          "settings": {
+            "collection": "",
+            "focal_point": "center center",
+            "size": "square-small"
+          }
         },
         "collection-6": {
           "type": "collection",
           "settings": {
+            "collection": "",
+            "focal_point": "center center",
             "size": "wide"
           }
         }
@@ -150,7 +317,9 @@
         "collection-6"
       ],
       "settings": {
-        "title": ""
+        "title": "",
+        "divider": false,
+        "enable_gutter": false
       }
     },
     "testimonials": {
@@ -159,13 +328,16 @@
         "testimonial-1": {
           "type": "testimonial",
           "settings": {
+            "icon": "5-stars",
             "testimonial": "<p>Couldn't be happier with the service I received from this company.</p>",
-            "author": "James L."
+            "author": "James L.",
+            "author_info": "Los Angeles, CA"
           }
         },
         "testimonial-2": {
           "type": "testimonial",
           "settings": {
+            "icon": "5-stars",
             "testimonial": "<p>Really went out of their way to make me feel special as a customer, highly recommend!</p>",
             "author": "Rachel F.",
             "author_info": "Toronto, ON"
@@ -174,6 +346,7 @@
         "testimonial-3": {
           "type": "testimonial",
           "settings": {
+            "icon": "5-stars",
             "testimonial": "<p>Fantastic fabrics, great fit and no issues going through the laundry either!</p>",
             "author": "Sam R.",
             "author_info": "Brooklyn, NY"
@@ -182,6 +355,7 @@
         "testimonial-4": {
           "type": "testimonial",
           "settings": {
+            "icon": "5-stars",
             "testimonial": "<p>Couldn't be happier with the service I received from this company.</p>",
             "author": "Matt C.",
             "author_info": "Montreal, QC"
@@ -190,6 +364,7 @@
         "testimonial-5": {
           "type": "testimonial",
           "settings": {
+            "icon": "5-stars",
             "testimonial": "<p>Arrived fast and beautifully boxed. They even let me model on their site :)</p>",
             "author": "Sharon S.",
             "author_info": "New Orleans, LA"
@@ -203,13 +378,22 @@
         "testimonial-4",
         "testimonial-5"
       ],
-      "settings": {}
+      "settings": {
+        "title": "Don't take our word for it",
+        "round_images": true,
+        "color_background": "#f9f9f9",
+        "color_text": "#1c1d1d"
+      }
     },
     "featured-collection": {
       "type": "featured-collection",
       "settings": {
         "title": "Just restocked",
-        "home_featured_products": "pullovers"
+        "home_featured_products": "pullovers",
+        "per_row": 4,
+        "rows": 1,
+        "view_all": true,
+        "divider": false
       }
     },
     "featured-product": {
@@ -250,7 +434,8 @@
           "type": "tab",
           "settings": {
             "title": "Size chart",
-            "content": ""
+            "content": "",
+            "page": ""
           }
         },
         "contact": {
@@ -289,20 +474,24 @@
           "type": "text_block",
           "settings": {
             "icon": "plant",
-            "title": "Sustainable Materials"
+            "title": "Sustainable Materials",
+            "text": "<p>Use this section to explain a set of product features, to link to a series of pages, or to answer common questions about your products.</p>"
           }
         },
         "text_block-2": {
           "type": "text_block",
           "settings": {
             "icon": "charity",
-            "title": "Supporting Local Charity"
+            "title": "Supporting Local Charity",
+            "text": "<p>Use this section to explain a set of product features, to link to a series of pages, or to answer common questions about your products.</p>"
           }
         },
         "text_block-3": {
           "type": "text_block",
           "settings": {
-            "title": "90-Days Return Policy"
+            "icon": "chat",
+            "title": "90-Days Return Policy",
+            "text": "<p>Use this section to explain a set of product features, to link to a series of pages, or to answer common questions about your products.</p>"
           }
         }
       },
@@ -313,7 +502,12 @@
       ],
       "settings": {
         "title": "",
-        "icon_color": "#000000"
+        "align_text": "center",
+        "desktop_columns_per_row": 3,
+        "icon_color": "#000000",
+        "button_label": "",
+        "button_link": "",
+        "divider": false
       }
     },
     "background-image-text": {
@@ -322,7 +516,13 @@
         "subtitle": "Athlete feature",
         "title": "James Harrison",
         "text": "<p>We know how important it is to have gear that doesn't let you down when you're pushing your limits. That's why we only use the highest quality fabrics.</p>",
-        "height": 650
+        "button_label": "",
+        "button_link": "",
+        "layout": "left",
+        "height": 650,
+        "parallax": true,
+        "parallax_direction": "top",
+        "lazyload_images": true
       }
     },
     "blog-posts": {
@@ -330,9 +530,13 @@
       "settings": {
         "title": "From the journal",
         "blog": "news",
+        "post_limit": 3,
         "blog_show_tags": false,
+        "blog_show_date": true,
         "blog_show_comments": false,
-        "blog_show_author": false
+        "blog_show_author": false,
+        "view_all": true,
+        "divider": false
       }
     },
     "newsletter": {
@@ -340,11 +544,16 @@
       "blocks": {
         "title": {
           "type": "title",
-          "settings": {}
+          "settings": {
+            "title": "Sign up and save",
+            "heading_size": "h2"
+          }
         },
         "text": {
           "type": "text",
-          "settings": {}
+          "settings": {
+            "text": "<p>Subscribe to get special offers, free giveaways, and once-in-a-lifetime deals.</p>"
+          }
         },
         "form": {
           "type": "form",
@@ -356,7 +565,16 @@
         "text",
         "form"
       ],
-      "settings": {}
+      "settings": {
+        "align_text": "center",
+        "image_width": "33",
+        "image_mask": "none",
+        "image_position": "right",
+        "color_background": "#f9f9f9",
+        "color_text": "#1c1d1d",
+        "top_padding": true,
+        "bottom_padding": true
+      }
     },
     "map": {
       "type": "map",
@@ -364,12 +582,14 @@
         "map_title": "Local pickup available",
         "address": "<p>301 Front St W<br/>Toronto, Canada</p><p>Mon - Fri, 8:30am - 10:30pm<br/>Saturday, 8:30am - 10:30pm<br/>Sunday, 8:30am - 10:30pm</p>",
         "map_address": "50 dingwall ave, toronto",
-        "api_key": "AIzaSyDmzOwByRdcUVhxaPvA4AKFVlF_KRnlxgM"
+        "api_key": "AIzaSyDmzOwByRdcUVhxaPvA4AKFVlF_KRnlxgM",
+        "show_button": true,
+        "lazyload_images": true
       }
     }
   },
   "order": [
-    "fading-images",
+    "tiktok_stories_7cJy8q",
     "featured-collection-switcher",
     "collection-callout",
     "hero-video",

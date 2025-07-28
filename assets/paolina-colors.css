@@ -1,0 +1,136 @@
+/* 
+  Palette Colori Paolina Roma
+  File da includere in assets/ del tema Shopify
+*/
+
+:root {
+  /* Colori Principali */
+  --pr-green-smoke: #3E491C;      /* Verde Oliva Scuro - Testi e CTA primari */
+  --pr-woodland: #F3A2A5;         /* Rosa Antico - Accenti e hover */
+  --pr-sea-pink: #D75C6C;         /* Rosa Corallo - Urgenza e notifiche */
+  --pr-serenade: #FADADA;         /* Rosa Cipria - Sfondo principale */
+  --pr-bianco-panna: #FFF5EA;     /* Bianco Panna - Sfondi alternativi */
+  --pr-pine-glade: #BBC385;       /* Verde Salvia - Elementi decorativi */
+  --pr-primrose: #EEEDA4;         /* Giallo Pastello - Highlight e badge */
+  --pr-mandy: #A6AE69;            /* Verde Muschio - Supporto grafico */
+  --pr-jon: #391B1C;              /* Marrone Cioccolato - Testi secondari */
+  
+  /* Colori con RGB per opacità */
+  --pr-green-smoke-rgb: 62, 73, 28;
+  --pr-woodland-rgb: 243, 162, 165;
+  --pr-sea-pink-rgb: 215, 92, 108;
+  --pr-serenade-rgb: 250, 218, 218;
+  --pr-bianco-panna-rgb: 255, 245, 234;
+  --pr-pine-glade-rgb: 187, 195, 133;
+  --pr-primrose-rgb: 238, 237, 164;
+  --pr-mandy-rgb: 166, 174, 105;
+  --pr-jon-rgb: 57, 27, 28;
+  
+  /* Ombre personalizzate */
+  --pr-shadow-sm: 0 1px 3px rgba(57, 27, 28, 0.12);
+  --pr-shadow-md: 0 4px 6px rgba(57, 27, 28, 0.15);
+  --pr-shadow-lg: 0 10px 15px rgba(57, 27, 28, 0.20);
+  
+  /* Bordi */
+  --pr-border-light: 1px solid var(--pr-pine-glade);
+  --pr-border-medium: 1px solid var(--pr-green-smoke);
+  --pr-border-dark: 1px solid var(--pr-jon);
+  
+  /* Gradienti */
+  --pr-gradient-primary: linear-gradient(135deg, var(--pr-serenade) 0%, var(--pr-woodland) 100%);
+  --pr-gradient-secondary: linear-gradient(135deg, var(--pr-bianco-panna) 0%, var(--pr-primrose) 100%);
+  --pr-gradient-accent: linear-gradient(135deg, var(--pr-woodland) 0%, var(--pr-sea-pink) 100%);
+  
+  /* Animazioni e transizioni */
+  --pr-transition-fast: all 0.2s ease;
+  --pr-transition-medium: all 0.3s ease;
+  --pr-transition-slow: all 0.5s ease;
+}
+
+/* Utility Classes Paolina Roma */
+.pr-bg-primary { background-color: var(--pr-serenade); }
+.pr-bg-secondary { background-color: var(--pr-bianco-panna); }
+.pr-bg-accent { background-color: var(--pr-woodland); }
+.pr-bg-dark { background-color: var(--pr-jon); }
+.pr-bg-green { background-color: var(--pr-green-smoke); }
+
+.pr-text-primary { color: var(--pr-green-smoke); }
+.pr-text-secondary { color: var(--pr-jon); }
+.pr-text-accent { color: var(--pr-sea-pink); }
+.pr-text-light { color: var(--pr-bianco-panna); }
+
+.pr-border { border: var(--pr-border-light); }
+.pr-border-medium { border: var(--pr-border-medium); }
+.pr-border-dark { border: var(--pr-border-dark); }
+
+.pr-shadow-sm { box-shadow: var(--pr-shadow-sm); }
+.pr-shadow-md { box-shadow: var(--pr-shadow-md); }
+.pr-shadow-lg { box-shadow: var(--pr-shadow-lg); }
+
+/* Hover Effects */
+.pr-hover-lift {
+  transition: var(--pr-transition-medium);
+}
+.pr-hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--pr-shadow-md);
+}
+
+.pr-hover-accent {
+  transition: var(--pr-transition-fast);
+}
+.pr-hover-accent:hover {
+  background-color: var(--pr-woodland);
+  color: white;
+}
+
+/* Button Styles Paolina */
+.pr-button {
+  background-color: var(--pr-green-smoke);
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 4px;
+  font-weight: 500;
+  transition: var(--pr-transition-fast);
+  cursor: pointer;
+}
+
+.pr-button:hover {
+  background-color: var(--pr-jon);
+  transform: translateY(-1px);
+  box-shadow: var(--pr-shadow-md);
+}
+
+.pr-button-outline {
+  background-color: transparent;
+  color: var(--pr-green-smoke);
+  border: 2px solid var(--pr-green-smoke);
+  padding: 10px 22px;
+  border-radius: 4px;
+  font-weight: 500;
+  transition: var(--pr-transition-fast);
+  cursor: pointer;
+}
+
+.pr-button-outline:hover {
+  background-color: var(--pr-green-smoke);
+  color: white;
+}
+
+.pr-button-accent {
+  background-color: var(--pr-sea-pink);
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 4px;
+  font-weight: 500;
+  transition: var(--pr-transition-fast);
+  cursor: pointer;
+}
+
+.pr-button-accent:hover {
+  background-color: var(--pr-woodland);
+  transform: translateY(-1px);
+  box-shadow: var(--pr-shadow-md);
+}

@@ -18,55 +18,55 @@
         "type": "color",
         "id": "color_body_bg",
         "label": "t:settings_schema.colors.settings.color_body_bg.label",
-        "default": "#ffffff"
+        "default": "#FADADA"
       },
       {
         "type": "color",
         "id": "color_body_text",
         "label": "t:settings_schema.colors.settings.color_body_text.label",
-        "default": "#1c1d1d"
+        "default": "#3E491C"
       },
       {
         "type": "color",
         "id": "color_borders",
         "label": "t:settings_schema.colors.settings.color_borders.label",
-        "default": "#1c1d1d"
+        "default": "#BBC385"
       },
       {
         "type": "color",
         "id": "color_button",
         "label": "t:settings_schema.colors.settings.color_button.label",
-        "default": "#1c1d1d"
+        "default": "#3E491C"
       },
       {
         "type": "color",
         "id": "color_button_text",
         "label": "t:settings_schema.colors.settings.color_button_text.label",
-        "default": "#ffffff"
+        "default": "#FFFFFF"
       },
       {
         "type": "color",
         "id": "color_sale_price",
         "label": "t:settings_schema.colors.settings.color_sale_price.label",
-        "default": "#1c1d1d"
+        "default": "#D75C6C"
       },
       {
         "type": "color",
         "id": "color_sale_tag",
         "label": "t:settings_schema.colors.settings.color_sale_tag.label",
-        "default": "#1c1d1d"
+        "default": "#D75C6C"
       },
       {
         "type": "color",
         "id": "color_sale_tag_text",
         "label": "t:settings_schema.colors.settings.color_sale_tag_text.label",
-        "default": "#ffffff"
+        "default": "#FFFFFF"
       },
       {
         "type": "color",
         "id": "color_cart_dot",
         "label": "t:settings_schema.colors.settings.color_cart_dot.label",
-        "default": "#ff4f33"
+        "default": "#D75C6C"
       },
       {
         "type": "header",
@@ -76,25 +76,25 @@
         "type": "color",
         "id": "color_header",
         "label": "t:settings_schema.colors.settings.color_header.label",
-        "default": "#ffffff"
+        "default": "#FFF5EA"
       },
       {
         "type": "color",
         "id": "color_header_text",
         "label": "t:settings_schema.colors.settings.color_header_text.label",
-        "default": "#1c1d1d"
+        "default": "#3E491C"
       },
       {
         "type": "color",
         "id": "color_announcement",
         "label": "t:settings_schema.colors.settings.color_announcement.label",
-        "default": "#1c1d1d"
+        "default": "#3E491C"
       },
       {
         "type": "color",
         "id": "color_announcement_text",
         "label": "t:settings_schema.colors.settings.color_announcement_text.label",
-        "default": "#ffffff"
+        "default": "#FFFFFF"
       },
       {
         "type": "header",
@@ -104,13 +104,13 @@
         "type": "color",
         "id": "color_footer",
         "label": "t:settings_schema.colors.settings.color_footer.label",
-        "default": "#111"
+        "default": "#391B1C"
       },
       {
         "type": "color",
         "id": "color_footer_text",
         "label": "t:settings_schema.colors.settings.color_footer_text.label",
-        "default": "#ffffff"
+        "default": "#FFF5EA"
       },
       {
         "type": "header",
@@ -120,31 +120,31 @@
         "type": "color",
         "id": "color_drawer_background",
         "label": "t:settings_schema.colors.settings.color_drawer_background.label",
-        "default": "#1c1d1d"
+        "default": "#FFF5EA"
       },
       {
         "type": "color",
         "id": "color_drawer_text",
         "label": "t:settings_schema.colors.settings.color_drawer_text.label",
-        "default": "#ffffff"
+        "default": "#3E491C"
       },
       {
         "type": "color",
         "id": "color_drawer_border",
         "label": "t:settings_schema.colors.settings.color_drawer_border.label",
-        "default": "#343535"
+        "default": "#BBC385"
       },
       {
         "type": "color",
         "id": "color_drawer_button",
         "label": "t:settings_schema.colors.settings.color_drawer_button.label",
-        "default": "#a26b25"
+        "default": "#3E491C"
       },
       {
         "type": "color",
         "id": "color_drawer_button_text",
         "label": "t:settings_schema.colors.settings.color_drawer_button_text.label",
-        "default": "#ffffff"
+        "default": "#FFFFFF"
       },
       {
         "type": "color",
@@ -164,19 +164,19 @@
         "type": "color",
         "id": "color_image_text",
         "label": "t:settings_schema.colors.settings.color_image_text.label",
-        "default": "#ffffff"
+        "default": "#FFFFFF"
       },
       {
         "type": "color",
         "id": "color_image_2",
         "label": "t:settings_schema.colors.settings.color_image_2.label",
-        "default": "#fffed9"
+        "default": "#F3A2A5"
       },
       {
         "type": "range",
         "id": "color_image_2_opacity",
         "label": "t:settings_schema.colors.settings.color_image_2_opacity.label",
-        "default": 0,
+        "default": 30,
         "min": 0,
         "max": 100,
         "step": 2,
@@ -186,13 +186,13 @@
         "type": "color",
         "id": "color_image_1",
         "label": "t:settings_schema.colors.settings.color_image_1.label",
-        "default": "#000000"
+        "default": "#3E491C"
       },
       {
         "type": "range",
         "id": "color_image_1_opacity",
         "label": "t:settings_schema.colors.settings.color_image_1_opacity.label",
-        "default": 50,
+        "default": 40,
         "min": 0,
         "max": 100,
         "step": 2,
@@ -206,13 +206,13 @@
         "type": "color",
         "id": "color_small_image_bg",
         "label": "t:settings_schema.colors.settings.color_small_image_bg.label",
-        "default": "#eee"
+        "default": "#FADADA"
       },
       {
         "type": "color",
         "id": "color_large_image_bg",
         "label": "t:settings_schema.colors.settings.color_large_image_bg.label",
-        "default": "#1c1d1d"
+        "default": "#391B1C"
       }
     ]
   },

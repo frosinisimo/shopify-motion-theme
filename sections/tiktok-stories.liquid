@@ -1,0 +1,1912 @@
+{% comment %}
+  Sezione TikTok Stories - Paolina Roma
+  Versione stabile con tutte le funzionalità
+{% endcomment %}
+
+<div class="pr-stories-section" style="position: relative; overflow: visible;">
+  {% if section.settings.heading != blank %}
+    <div class="section-header page-width">
+      <h2 class="{{ section.settings.heading_size }} text-{{ section.settings.heading_position }}">{{ section.settings.heading }}</h2>
+    </div>
+  {% endif %}
+
+  <div class="pr-stories-container {% unless section.settings.fullwidth %}page-width{% endunless %}">
+    <div class="pr-stories-wrapper">
+      <div class="pr-stories-scroll" data-layout="{{ section.settings.stories_layout }}">
+        {% for block in section.blocks %}
+          {% case block.type %}
+            {% when 'story' %}
+              <div class="pr-story-item" 
+                   data-story-index="{{ forloop.index0 }}"
+                   data-story-type="{{ block.settings.story_type }}"
+                   data-video-url="{{ block.settings.video_url }}"
+                   data-image-url="{{ block.settings.image_url | image_url: width: 1080 }}"
+                   data-link-url="{{ block.settings.link_url }}"
+                   data-cta-text="{{ block.settings.cta_text }}"
+                   data-cta-link="{{ block.settings.cta_link }}"
+                   data-auto-duration="{{ block.settings.auto_duration }}"
+                   {{ block.shopify_attributes }}>
+                <button class="pr-story-trigger" 
+                        type="button"
+                        aria-label="{{ block.settings.story_title }}">
+                  <div class="pr-story-circle" 
+                       {% if block.settings.has_new_content %}data-has-ring="true"{% endif %}
+                       style="--ring-color: {{ block.settings.ring_color }};">
+                    <div class="pr-story-ring"></div>
+                    <div class="pr-story-image-wrapper">
+                      {% if block.settings.cover_image %}
+                        <img src="{{ block.settings.cover_image | image_url: width: 200 }}"
+                             alt="{{ block.settings.story_title }}"
+                             loading="lazy"
+                             width="100"
+                             height="100">
+                      {% else %}
+                        <div class="pr-story-placeholder"></div>
+                      {% endif %}
+                      {% if block.settings.story_type == 'link' %}
+                        <div class="pr-story-link-icon">
+                          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M11 3H3v14h14v-8m0-6v6m0-6h-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                          </svg>
+                        </div>
+                      {% endif %}
+                    </div>
+                  </div>
+                  <p class="pr-story-title">{{ block.settings.story_title }}</p>
+                  
+                  {% if section.settings.enable_hover_popup and block.settings.popup_text != blank %}
+                    <div class="pr-story-popup-container">
+                      <div class="pr-story-popup">
+                        {{ block.settings.popup_text }}
+                      </div>
+                    </div>
+                  {% endif %}
+                </button>
+              </div>
+          {% endcase %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Player Fullscreen -->
+<div class="pr-stories-player-overlay" id="pr-stories-overlay-{{ section.id }}">
+  <div class="pr-stories-player" id="pr-stories-player-{{ section.id }}">
+    <div class="pr-player-header">
+      <div class="pr-progress-container"></div>
+      <button type="button" class="pr-close-player" aria-label="{{ 'general.accessibility.close_modal' | t }}">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+    
+    <div class="pr-player-content">
+      <div class="pr-media-container">
+        <video class="pr-player-video pr-media-element" 
+               playsinline 
+               webkit-playsinline
+               preload="none">
+        </video>
+        <img class="pr-player-image pr-media-element" 
+             alt=""
+             style="display: none;">
+        
+        <!-- Audio control -->
+        <button type="button" class="pr-audio-control" aria-label="Toggle audio" style="display: none;">
+          <svg class="pr-audio-icon pr-audio-icon--on" width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M3 5.5v5h2.5L9 14V2L5.5 5.5H3z" fill="currentColor"/>
+            <path d="M11.5 5C12.5 6 12.5 7 12.5 8s0 2-1 3M13 3.5c1.5 1.5 2 3.5 2 4.5s-.5 3-2 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <svg class="pr-audio-icon pr-audio-icon--off" width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M3 5.5v5h2.5L9 14V2L5.5 5.5H3z" fill="currentColor"/>
+            <path d="M13 5L10 8m0 0L13 11M10 8l3-3m-3 3l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </button>
+
+        <!-- Pause indicator -->
+        <div class="pr-pause-indicator">
+          <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+            <rect x="18" y="15" width="8" height="30" fill="white"/>
+            <rect x="34" y="15" width="8" height="30" fill="white"/>
+          </svg>
+        </div>
+      </div>
+      
+      <div class="pr-player-navigation">
+        <button type="button" class="pr-tap-prev" aria-label="{{ 'general.pagination.previous' | t }}">
+          {% case section.settings.arrow_style %}
+            {% when 'subtle' %}
+              <div class="pr-nav-arrow pr-nav-arrow--left pr-nav-arrow--subtle">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            {% when 'bold' %}
+              <div class="pr-nav-arrow pr-nav-arrow--left pr-nav-arrow--bold">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            {% when 'instagram' %}
+              <div class="pr-nav-arrow pr-nav-arrow--left pr-nav-arrow--instagram">
+                <svg width="12" height="20" viewBox="0 0 12 20" fill="none">
+                  <path d="M10 2L2 10L10 18" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+          {% endcase %}
+        </button>
+        
+        <div class="pr-tap-center"></div>
+        
+        <button type="button" class="pr-tap-next" aria-label="{{ 'general.pagination.next' | t }}">
+          {% case section.settings.arrow_style %}
+            {% when 'subtle' %}
+              <div class="pr-nav-arrow pr-nav-arrow--right pr-nav-arrow--subtle">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M6 12L10 8L6 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            {% when 'bold' %}
+              <div class="pr-nav-arrow pr-nav-arrow--right pr-nav-arrow--bold">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            {% when 'instagram' %}
+              <div class="pr-nav-arrow pr-nav-arrow--right pr-nav-arrow--instagram">
+                <svg width="12" height="20" viewBox="0 0 12 20" fill="none">
+                  <path d="M2 2L10 10L2 18" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+          {% endcase %}
+        </button>
+      </div>
+      
+      <!-- CTA con stili diversi -->
+      {% case section.settings.cta_style_type %}
+        {% when 'instagram' %}
+          <div class="pr-player-cta pr-player-cta--instagram">
+            <a href="#" class="pr-story-cta-btn pr-story-cta-btn--instagram">
+              <span class="pr-cta-text"></span>
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                <path d="M1 9L9 1M9 1H1M9 1V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </div>
+        {% when 'tiktok' %}
+          <div class="pr-player-cta pr-player-cta--tiktok">
+            <a href="#" class="pr-story-cta-btn pr-story-cta-btn--tiktok">
+              <span class="pr-cta-text"></span>
+            </a>
+          </div>
+        {% when 'custom' %}
+          <div class="pr-player-cta pr-player-cta--custom">
+            <a href="#" class="pr-story-cta-btn pr-story-cta-btn--custom">
+              <span class="pr-cta-text"></span>
+            </a>
+          </div>
+      {% endcase %}
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Container principale */
+  #shopify-section-{{ section.id }} .pr-stories-section {
+    background-color: {{ section.settings.background_color }};
+  }
+
+  #shopify-section-{{ section.id }} .pr-stories-wrapper {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  #shopify-section-{{ section.id }} .pr-stories-scroll {
+    display: flex;
+    gap: {{ section.settings.story_gap }}px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding: 20px 10px 40px; /* Extra padding bottom for popup */
+  }
+
+  /* Override page-width padding on mobile */
+  @media screen and (max-width: 768px) {
+    #shopify-section-{{ section.id }} .pr-stories-container.page-width {
+      padding-left: {{ section.settings.mobile_padding_left }}px !important;
+      padding-right: {{ section.settings.mobile_padding_right }}px !important;
+    }
+  }
+
+  /* Layout */
+  #shopify-section-{{ section.id }} .pr-stories-scroll[data-layout="centered"] {
+    justify-content: center;
+  }
+
+  #shopify-section-{{ section.id }} .pr-stories-scroll[data-layout="distributed"] {
+    justify-content: space-between;
+  }
+
+  @media screen and (max-width: 768px) {
+    #shopify-section-{{ section.id }} .pr-stories-scroll[data-layout="centered"],
+    #shopify-section-{{ section.id }} .pr-stories-scroll[data-layout="distributed"] {
+      justify-content: flex-start;
+    }
+  }
+
+  #shopify-section-{{ section.id }} .pr-stories-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Story Item */
+  #shopify-section-{{ section.id }} .pr-story-item {
+    flex: 0 0 auto;
+    position: relative;
+  }
+
+  #shopify-section-{{ section.id }} .pr-story-trigger {
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    text-align: center;
+    display: block;
+    position: relative;
+  }
+
+  /* Story Circle */
+  #shopify-section-{{ section.id }} .pr-story-circle {
+    width: {{ section.settings.story_size }}px;
+    height: {{ section.settings.story_size }}px;
+    position: relative;
+    margin: 0 auto {{ section.settings.title_spacing }}px;
+  }
+
+  #shopify-section-{{ section.id }} .pr-story-ring {
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    bottom: -4px;
+    border-radius: 50%;
+    background: transparent;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  #shopify-section-{{ section.id }} .pr-story-circle[data-has-ring="true"] .pr-story-ring {
+    opacity: 1;
+    background: linear-gradient(45deg, var(--ring-color) 0%, var(--ring-color) 50%, rgba(255,255,255,0.8) 100%);
+    animation: pr-rotate-{{ section.id }} 3s linear infinite;
+  }
+
+  @keyframes pr-rotate-{{ section.id }} {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  #shopify-section-{{ section.id }} .pr-story-image-wrapper {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+    z-index: 2;
+    background: var(--colorSmallImageBg);
+    border: 3px solid {{ section.settings.border_color }};
+  }
+
+  {% unless section.settings.disable_hover_effect %}
+  #shopify-section-{{ section.id }} .pr-story-trigger:hover .pr-story-image-wrapper {
+    border-color: {{ section.settings.border_hover_color }};
+    transform: scale(1.05);
+  }
+  {% endunless %}
+
+  #shopify-section-{{ section.id }} .pr-story-image-wrapper {
+    transition: all 0.3s ease;
+  }
+
+  #shopify-section-{{ section.id }} .pr-story-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  #shopify-section-{{ section.id }} .pr-story-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, {{ section.settings.placeholder_color_1 }} 0%, {{ section.settings.placeholder_color_2 }} 100%);
+  }
+
+  /* Link icon */
+  #shopify-section-{{ section.id }} .pr-story-link-icon {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    width: 24px;
+    height: 24px;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+  }
+
+  #shopify-section-{{ section.id }} .pr-story-title {
+    font-size: {{ section.settings.title_size }}px;
+    font-family: var(--typeBasePrimary), var(--typeBaseFallback);
+    font-weight: var(--typeBaseWeight);
+    color: {{ section.settings.text_color }};
+    margin: 0;
+    line-height: 1.2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: {{ section.settings.story_size }}px;
+  }
+
+  /* Popup Hover */
+  {% if section.settings.enable_hover_popup %}
+  #shopify-section-{{ section.id }} .pr-story-popup-container {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding-bottom: 10px;
+    z-index: 1000;
+    pointer-events: none;
+  }
+
+  #shopify-section-{{ section.id }} .pr-story-popup {
+    background: {{ section.settings.popup_bg_color }};
+    color: {{ section.settings.popup_text_color }};
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    position: relative;
+  }
+
+  #shopify-section-{{ section.id }} .pr-story-popup::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-top-color: {{ section.settings.popup_bg_color }};
+  }
+
+  #shopify-section-{{ section.id }} .pr-story-trigger:hover .pr-story-popup {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  @media (max-width: 768px) {
+    #shopify-section-{{ section.id }} .pr-story-popup-container {
+      display: none;
+    }
+  }
+  {% endif %}
+
+  /* Player Overlay */
+  #pr-stories-overlay-{{ section.id }} {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.95);
+    z-index: 9999;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  #pr-stories-overlay-{{ section.id }}.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #pr-stories-overlay-{{ section.id }}.visible {
+    opacity: 1;
+  }
+
+  #pr-stories-player-{{ section.id }} {
+    width: 100%;
+    height: 100%;
+    max-width: 500px;
+    position: relative;
+  }
+
+  /* Header con progress */
+  #pr-stories-player-{{ section.id }} .pr-player-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    padding: 20px;
+  }
+
+  #pr-stories-player-{{ section.id }} .pr-progress-container {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 20px;
+  }
+
+  #pr-stories-player-{{ section.id }} .pr-progress-bar {
+    flex: 1;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  #pr-stories-player-{{ section.id }} .pr-progress-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: #fff;
+    width: 0%;
+    border-radius: 3px;
+  }
+
+  #pr-stories-player-{{ section.id }} .pr-close-player {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease;
+  }
+
+  #pr-stories-player-{{ section.id }} .pr-close-player:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  /* Player Content */
+  #pr-stories-player-{{ section.id }} .pr-player-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  #pr-stories-player-{{ section.id }} .pr-media-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  #pr-stories-player-{{ section.id }} .pr-media-element {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+  }
+
+  /* Audio Control */
+  #pr-stories-player-{{ section.id }} .pr-audio-control {
+    position: absolute;
+    top: 70px;
+    right: 20px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.6);
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    z-index: 11;
+  }
+
+  #pr-stories-player-{{ section.id }} .pr-audio-control:hover {
+    background: rgba(0, 0, 0, 0.8);
+    transform: scale(1.1);
+  }
+
+  #pr-stories-player-{{ section.id }} .pr-audio-icon {
+    display: none;
+  }
+
+  #pr-stories-player-{{ section.id }} .pr-audio-control.muted .pr-audio-icon--off {
+    display: block;
+  }
+
+  #pr-stories-player-{{ section.id }} .pr-audio-control:not(.muted) .pr-audio-icon--on {
+    display: block;
+  }
+
+  /* Pause Indicator */
+  #pr-stories-player-{{ section.id }} .pr-pause-indicator {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    pointer-events: none;
+  }
+
+  #pr-stories-player-{{ section.id }} .pr-pause-indicator.visible {
+    opacity: 1;
+  }
+
+  /* Navigation */
+  #pr-stories-player-{{ section.id }} .pr-player-navigation {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    pointer-events: none;
+  }
+
+  #pr-stories-player-{{ section.id }} .pr-tap-prev,
+  #pr-stories-player-{{ section.id }} .pr-tap-next {
+    flex: 1;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    pointer-events: all;
+    -webkit-tap-highlight-color: transparent;
+    position: relative;
+  }
+
+  #pr-stories-player-{{ section.id }} .pr-tap-center {
+    flex: 2;
+    pointer-events: all;
+    cursor: pointer;
+  }
+
+  #pr-stories-player-{{ section.id }} .pr-nav-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+  }
+
+  #pr-stories-player-{{ section.id }} .pr-nav-arrow--left {
+    left: 20px;
+  }
+
+  #pr-stories-player-{{ section.id }} .pr-nav-arrow--right {
+    right: 20px;
+  }
+
+  /* Arrow Styles */
+  #pr-stories-player-{{ section.id }} .pr-nav-arrow--subtle {
+    width: 44px;
+    height: 44px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    opacity: 0;
+  }
+
+  #pr-stories-player-{{ section.id }} .pr-nav-arrow--subtle svg {
+    stroke: rgba(255, 255, 255, 0.8);
+  }
+
+  #pr-stories-player-{{ section.id }} .pr-nav-arrow--bold {
+    width: 64px;
+    height: 64px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    opacity: 0.8;
+  }
+
+  #pr-stories-player-{{ section.id }} .pr-nav-arrow--bold svg {
+    stroke: #fff;
+  }
+
+  #pr-stories-player-{{ section.id }} .pr-nav-arrow--instagram {
+    width: auto;
+    height: auto;
+    background: none;
+    opacity: 0;
+    padding: 20px;
+  }
+
+  #pr-stories-player-{{ section.id }} .pr-nav-arrow--instagram svg {
+    stroke: #fff;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+  }
+
+  /* Show arrows */
+  #pr-stories-player-{{ section.id }} .pr-tap-prev:hover .pr-nav-arrow,
+  #pr-stories-player-{{ section.id }} .pr-tap-next:hover .pr-nav-arrow,
+  #pr-stories-overlay-{{ section.id }}.show-arrows .pr-nav-arrow {
+    opacity: 1;
+  }
+
+  #pr-stories-player-{{ section.id }} .pr-tap-prev:active .pr-nav-arrow,
+  #pr-stories-player-{{ section.id }} .pr-tap-next:active .pr-nav-arrow {
+    transform: translateY(-50%) scale(0.9);
+  }
+
+  /* CTA Styles */
+  #pr-stories-player-{{ section.id }} .pr-player-cta {
+    position: absolute;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  #pr-stories-player-{{ section.id }} .pr-player-cta.visible {
+    opacity: 1;
+  }
+
+  /* Instagram Style CTA */
+  #pr-stories-player-{{ section.id }} .pr-player-cta--instagram {
+    bottom: 20px;
+    left: 20px;
+    right: auto;
+  }
+
+  #pr-stories-player-{{ section.id }} .pr-story-cta-btn--instagram {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.9);
+    color: #000;
+    padding: 10px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+  }
+
+  #pr-stories-player-{{ section.id }} .pr-story-cta-btn--instagram:hover {
+    background: #fff;
+    transform: scale(1.05);
+  }
+
+  /* TikTok Style CTA */
+  #pr-stories-player-{{ section.id }} .pr-player-cta--tiktok {
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  #pr-stories-player-{{ section.id }} .pr-story-cta-btn--tiktok {
+    display: inline-block;
+    background: #fe2c55;
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+  }
+
+  /* Custom Style CTA */
+  #pr-stories-player-{{ section.id }} .pr-player-cta--custom {
+    bottom: {{ section.settings.cta_custom_position }}px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  #pr-stories-player-{{ section.id }} .pr-story-cta-btn--custom {
+    display: inline-block;
+    background: {{ section.settings.cta_custom_bg }};
+    color: {{ section.settings.cta_custom_text_color }};
+    padding: {{ section.settings.cta_custom_padding }}px {{ section.settings.cta_custom_padding | times: 2 }}px;
+    border-radius: {{ section.settings.cta_custom_radius }}px;
+    text-decoration: none;
+    font-size: {{ section.settings.cta_custom_font_size }}px;
+    font-weight: {{ section.settings.cta_custom_font_weight }};
+    transition: all 0.2s ease;
+  }
+
+  /* Mobile specific */
+  @media screen and (max-width: 768px) {
+    #shopify-section-{{ section.id }} .pr-stories-scroll {
+      gap: {{ section.settings.story_gap_mobile }}px;
+      padding: 15px 10px 30px;
+    }
+
+    #shopify-section-{{ section.id }} .pr-story-circle {
+      width: {{ section.settings.story_size_mobile }}px;
+      height: {{ section.settings.story_size_mobile }}px;
+    }
+
+    #shopify-section-{{ section.id }} .pr-story-title {
+      font-size: {{ section.settings.title_size_mobile }}px;
+      max-width: {{ section.settings.story_size_mobile }}px;
+    }
+
+    #pr-stories-player-{{ section.id }} {
+      max-width: 100%;
+    }
+
+    #pr-stories-player-{{ section.id }} .pr-media-element {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    #pr-stories-player-{{ section.id }} .pr-nav-arrow {
+      opacity: 0.7;
+    }
+
+    #pr-stories-player-{{ section.id }} .pr-nav-arrow--subtle {
+      opacity: 0.5;
+    }
+
+    #pr-stories-player-{{ section.id }} .pr-nav-arrow--bold {
+      opacity: 0.9;
+    }
+
+    #pr-stories-player-{{ section.id }} .pr-nav-arrow--instagram {
+      opacity: 0.8;
+    }
+  }
+
+  /* Funzioni base CSS */
+  @media only screen and (min-width: 769px) {
+    #shopify-section-{{ section.id }} {
+      max-width: {{ section.settings.max_dimensione }};
+      margin: 0 auto;
+    }
+
+    #shopify-section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_desktop }}px;
+      padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
+      margin-top: {{ section.settings.margin_top_desktop }}px;
+      margin-bottom: {{ section.settings.margin_bottom_desktop }}px;
+    }
+
+    {% if section.settings.nascondi_desktop %}
+      #shopify-section-{{ section.id }} {
+        display: none;
+      }
+    {% endif %}
+  }
+
+  @media only screen and (max-width: 768px) {
+    #shopify-section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+      margin-top: {{ section.settings.margin_top_mobile }}px;
+      margin-bottom: {{ section.settings.margin_bottom_mobile }}px;
+    }
+
+    {% if section.settings.nascondi_mobile %}
+      #shopify-section-{{ section.id }} {
+        display: none;
+      }
+    {% endif %}
+  }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const sectionId = '{{ section.id }}';
+  const section = document.querySelector('#shopify-section-' + sectionId);
+  const overlay = document.getElementById('pr-stories-overlay-' + sectionId);
+  const player = document.getElementById('pr-stories-player-' + sectionId);
+  const video = player.querySelector('.pr-player-video');
+  const image = player.querySelector('.pr-player-image');
+  const closeBtn = player.querySelector('.pr-close-player');
+  const progressContainer = player.querySelector('.pr-progress-container');
+  const ctaContainer = player.querySelector('.pr-player-cta');
+  const ctaText = player.querySelector('.pr-cta-text');
+  const ctaBtn = player.querySelector('.pr-story-cta-btn');
+  const tapPrev = player.querySelector('.pr-tap-prev');
+  const tapNext = player.querySelector('.pr-tap-next');
+  const tapCenter = player.querySelector('.pr-tap-center');
+  const audioControl = player.querySelector('.pr-audio-control');
+  const pauseIndicator = player.querySelector('.pr-pause-indicator');
+  
+  let stories = [];
+  let playableStories = [];
+  let currentStoryIndex = 0;
+  let progressBars = [];
+  let progressTimeout = null;
+  let videoDuration = {{ section.settings.story_duration }} * 1000;
+  let isPlayerOpen = false;
+  let arrowTimeout = null;
+  let isMuted = false;
+  let isPaused = false;
+  let remainingTime = 0;
+  let elapsedTime = 0;
+  
+  // Inizializza stories
+  section.querySelectorAll('.pr-story-item').forEach((item, index) => {
+    const story = {
+      element: item,
+      type: item.dataset.storyType,
+      videoUrl: item.dataset.videoUrl,
+      imageUrl: item.dataset.imageUrl,
+      linkUrl: item.dataset.linkUrl,
+      ctaText: item.dataset.ctaText,
+      ctaLink: item.dataset.ctaLink,
+      autoDuration: item.dataset.autoDuration === 'true',
+      index: index
+    };
+    stories.push(story);
+    
+    // Click handler
+    const trigger = item.querySelector('.pr-story-trigger');
+    trigger.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      if (story.type === 'link' && story.linkUrl) {
+        window.location.href = story.linkUrl;
+      } else {
+        openStory(index);
+      }
+    });
+  });
+
+  // Crea array di storie playable
+  playableStories = stories.filter(s => s.type !== 'link');
+
+  // Audio control
+  if (audioControl) {
+    audioControl.addEventListener('click', function(e) {
+      e.stopPropagation();
+      isMuted = !isMuted;
+      video.muted = isMuted;
+      audioControl.classList.toggle('muted', isMuted);
+    });
+  }
+
+  // Pause/Play control
+  if (tapCenter) {
+    tapCenter.addEventListener('click', function(e) {
+      e.stopPropagation();
+      togglePause();
+    });
+  }
+
+  function togglePause() {
+    if (isPaused) {
+      resumeStory();
+    } else {
+      pauseStory();
+    }
+  }
+
+  function pauseStory() {
+    isPaused = true;
+    pauseIndicator.classList.add('visible');
+    
+    if (video && !video.paused) {
+      video.pause();
+    }
+    
+    if (progressTimeout) {
+      clearTimeout(progressTimeout);
+      const currentBar = progressBars[currentStoryIndex];
+      if (currentBar) {
+        const computedStyle = window.getComputedStyle(currentBar.fill);
+        const width = parseFloat(computedStyle.width);
+        const totalWidth = currentBar.bar.offsetWidth;
+        const percentComplete = (width / totalWidth) * 100;
+        elapsedTime = (percentComplete / 100) * videoDuration;
+        remainingTime = videoDuration - elapsedTime;
+        currentBar.fill.style.transition = 'none';
+      }
+    }
+  }
+
+  function resumeStory() {
+    isPaused = false;
+    pauseIndicator.classList.remove('visible');
+    
+    if (video && video.paused && video.src) {
+      video.play().catch(e => console.log('Resume play failed:', e));
+    }
+    
+    const currentBar = progressBars[currentStoryIndex];
+    if (currentBar && remainingTime > 0) {
+      setTimeout(() => {
+        currentBar.fill.style.transition = `width ${remainingTime}ms linear`;
+        currentBar.fill.style.width = '100%';
+        
+        progressTimeout = setTimeout(() => {
+          nextStory();
+        }, remainingTime);
+      }, 50);
+    }
+  }
+
+  // Show arrows
+  function showArrowsTemporarily() {
+    overlay.classList.add('show-arrows');
+    clearTimeout(arrowTimeout);
+    arrowTimeout = setTimeout(() => {
+      overlay.classList.remove('show-arrows');
+    }, 2000);
+  }
+  
+  // Crea progress bars
+  function createProgressBars() {
+    progressContainer.innerHTML = '';
+    progressBars = [];
+    
+    playableStories.forEach((story, index) => {
+      const bar = document.createElement('div');
+      bar.className = 'pr-progress-bar';
+      const fill = document.createElement('div');
+      fill.className = 'pr-progress-fill';
+      bar.appendChild(fill);
+      progressContainer.appendChild(bar);
+      progressBars.push({ bar, fill });
+    });
+  }
+  
+  // Apri storia
+  function openStory(storyIndex) {
+    const playableIndex = playableStories.findIndex(s => s.index === storyIndex);
+    if (playableIndex === -1) return;
+    
+    currentStoryIndex = playableIndex;
+    createProgressBars();
+    
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    isPlayerOpen = true;
+    isPaused = false;
+    pauseIndicator.classList.remove('visible');
+    
+    setTimeout(() => {
+      overlay.classList.add('visible');
+      loadStory(playableIndex, true);
+      showArrowsTemporarily();
+    }, 10);
+  }
+  
+  // Carica storia
+  function loadStory(index, isInitial = false) {
+    if (index < 0 || index >= playableStories.length) {
+      closePlayer();
+      return;
+    }
+    
+    if (progressTimeout) {
+      clearTimeout(progressTimeout);
+      progressTimeout = null;
+    }
+    
+    const story = playableStories[index];
+    currentStoryIndex = index;
+    
+    updateProgressBars(index);
+    
+    isPaused = false;
+    pauseIndicator.classList.remove('visible');
+    remainingTime = 0;
+    elapsedTime = 0;
+    
+    // Show/hide audio control based on type
+    if (story.type === 'video') {
+      audioControl.style.display = 'flex';
+    } else {
+      audioControl.style.display = 'none';
+    }
+    
+    // Load media
+    if (story.type === 'video' && story.videoUrl) {
+      video.style.display = 'block';
+      image.style.display = 'none';
+      
+      video.src = story.videoUrl;
+      video.muted = isMuted;
+      video.load();
+      
+      if (story.autoDuration) {
+        video.addEventListener('loadedmetadata', function() {
+          const duration = video.duration * 1000;
+          videoDuration = duration;
+          startProgress(index, duration);
+        }, { once: true });
+      } else {
+        videoDuration = {{ section.settings.story_duration }} * 1000;
+        startProgress(index, videoDuration);
+      }
+      
+      video.play().catch(e => {
+        console.log('Autoplay failed, trying muted:', e);
+        video.muted = true;
+        isMuted = true;
+        if (audioControl) audioControl.classList.add('muted');
+        video.play();
+      });
+      
+    } else if (story.type === 'image' && story.imageUrl) {
+      video.style.display = 'none';
+      image.style.display = 'block';
+      
+      video.pause();
+      video.src = '';
+      
+      image.src = story.imageUrl;
+      videoDuration = {{ section.settings.story_duration }} * 1000;
+      startProgress(index, videoDuration);
+    }
+    
+    // Setup CTA
+    if (story.ctaText && story.ctaLink) {
+      ctaText.textContent = story.ctaText;
+      ctaBtn.href = story.ctaLink;
+      setTimeout(() => ctaContainer.classList.add('visible'), 500);
+    } else {
+      ctaContainer.classList.remove('visible');
+    }
+  }
+  
+  // Update progress bars
+  function updateProgressBars(currentIndex) {
+    progressBars.forEach((progressBar, index) => {
+      const fill = progressBar.fill;
+      
+      fill.style.transition = 'none';
+      
+      if (index < currentIndex) {
+        fill.style.width = '100%';
+      } else if (index === currentIndex) {
+        fill.style.width = '0%';
+      } else {
+        fill.style.width = '0%';
+      }
+      
+      fill.offsetWidth;
+    });
+  }
+  
+  // Progress animation
+  function startProgress(index, duration) {
+    const progressBar = progressBars[index];
+    if (!progressBar) return;
+    
+    setTimeout(() => {
+      progressBar.fill.style.transition = `width ${duration}ms linear`;
+      progressBar.fill.style.width = '100%';
+      
+      progressTimeout = setTimeout(() => {
+        nextStory();
+      }, duration);
+    }, 50);
+  }
+  
+  // Navigazione
+  function nextStory() {
+    if (isPaused) return;
+    
+    ctaContainer.classList.remove('visible');
+    
+    if (progressBars[currentStoryIndex]) {
+      progressBars[currentStoryIndex].fill.style.transition = 'none';
+      progressBars[currentStoryIndex].fill.style.width = '100%';
+    }
+    
+    loadStory(currentStoryIndex + 1);
+  }
+  
+  function prevStory() {
+    if (isPaused) return;
+    
+    ctaContainer.classList.remove('visible');
+    
+    if (progressBars[currentStoryIndex]) {
+      progressBars[currentStoryIndex].fill.style.transition = 'none';
+      progressBars[currentStoryIndex].fill.style.width = '0%';
+    }
+    
+    loadStory(currentStoryIndex - 1);
+  }
+  
+  // Event handlers
+  tapNext.addEventListener('click', function(e) {
+    e.stopPropagation();
+    nextStory();
+  });
+  
+  tapPrev.addEventListener('click', function(e) {
+    e.stopPropagation();
+    prevStory();
+  });
+  
+  closeBtn.addEventListener('click', closePlayer);
+  
+  // Click fuori per chiudere
+  overlay.addEventListener('click', function(e) {
+    if (e.target === overlay) {
+      closePlayer();
+    }
+  });
+  
+  // Touch/swipe support
+  let touchStartX = 0;
+  let touchEndX = 0;
+  
+  player.addEventListener('touchstart', e => {
+    touchStartX = e.changedTouches[0].screenX;
+  }, { passive: true });
+  
+  player.addEventListener('touchend', e => {
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+  }, { passive: true });
+  
+  function handleSwipe() {
+    const swipeThreshold = 50;
+    const diff = touchStartX - touchEndX;
+    
+    if (Math.abs(diff) > swipeThreshold) {
+      if (diff > 0) {
+        nextStory();
+      } else {
+        prevStory();
+      }
+    }
+  }
+  
+  // Keyboard navigation
+  document.addEventListener('keydown', e => {
+    if (!isPlayerOpen) return;
+    
+    if (e.key === 'ArrowRight') nextStory();
+    if (e.key === 'ArrowLeft') prevStory();
+    if (e.key === 'Escape') closePlayer();
+    if (e.key === ' ') {
+      e.preventDefault();
+      togglePause();
+    }
+  });
+  
+  // Close player
+  function closePlayer() {
+    overlay.classList.remove('visible');
+    overlay.classList.remove('show-arrows');
+    ctaContainer.classList.remove('visible');
+    
+    if (progressTimeout) {
+      clearTimeout(progressTimeout);
+      progressTimeout = null;
+    }
+    
+    if (arrowTimeout) {
+      clearTimeout(arrowTimeout);
+    }
+    
+    video.pause();
+    video.src = '';
+    image.src = '';
+    document.body.style.overflow = '';
+    isPlayerOpen = false;
+    isPaused = false;
+    
+    setTimeout(() => {
+      overlay.classList.remove('active');
+    }, 300);
+  }
+  
+  // Visibility change
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden && isPlayerOpen && !isPaused) {
+      pauseStory();
+    }
+  });
+});
+</script>
+
+{% schema %}
+{
+  "name": "TikTok Stories",
+  "tag": "section",
+  "class": "pr-tiktok-stories",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Titolo Sezione"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Titolo"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Dimensione titolo",
+      "default": "h2",
+      "options": [
+        {
+          "value": "h1",
+          "label": "Grande (H1)"
+        },
+        {
+          "value": "h2",
+          "label": "Medio (H2)"
+        },
+        {
+          "value": "h3",
+          "label": "Piccolo (H3)"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "heading_position",
+      "label": "Allineamento titolo",
+      "default": "center",
+      "options": [
+        {
+          "value": "left",
+          "label": "Sinistra"
+        },
+        {
+          "value": "center",
+          "label": "Centro"
+        },
+        {
+          "value": "right",
+          "label": "Destra"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "checkbox",
+      "id": "fullwidth",
+      "label": "Larghezza piena",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "stories_layout",
+      "label": "Layout storie",
+      "default": "left",
+      "options": [
+        {
+          "value": "left",
+          "label": "Allineate a sinistra"
+        },
+        {
+          "value": "centered",
+          "label": "Centrate"
+        },
+        {
+          "value": "distributed",
+          "label": "Distribuite uniformemente"
+        }
+      ],
+      "info": "Su mobile sarà sempre allineato a sinistra con scroll"
+    },
+    {
+      "type": "header",
+      "content": "Padding Mobile"
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_left",
+      "label": "Padding sinistro mobile",
+      "default": 10,
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_right",
+      "label": "Padding destro mobile",
+      "default": 10,
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Colori Sezione"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Colore sfondo",
+      "default": "#FADADA"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Colore testo",
+      "default": "#3E491C"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Colore bordo base",
+      "default": "#FFF5EA"
+    },
+    {
+      "type": "color",
+      "id": "border_hover_color",
+      "label": "Colore bordo hover",
+      "default": "#F3A2A5"
+    },
+    {
+      "type": "checkbox",
+      "id": "disable_hover_effect",
+      "label": "Disabilita effetto hover",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "placeholder_color_1",
+      "label": "Placeholder colore 1",
+      "default": "#FADADA"
+    },
+    {
+      "type": "color",
+      "id": "placeholder_color_2",
+      "label": "Placeholder colore 2",
+      "default": "#F3A2A5"
+    },
+    {
+      "type": "header",
+      "content": "Popup Hover (Desktop)"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_hover_popup",
+      "label": "Abilita popup hover",
+      "default": false,
+      "info": "Se il testo è vuoto, il popup non apparirà"
+    },
+    {
+      "type": "color",
+      "id": "popup_bg_color",
+      "label": "Sfondo popup",
+      "default": "#3E491C"
+    },
+    {
+      "type": "color",
+      "id": "popup_text_color",
+      "label": "Testo popup",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Dimensioni Desktop"
+    },
+    {
+      "type": "range",
+      "id": "story_size",
+      "label": "Dimensione cerchi",
+      "default": 80,
+      "min": 60,
+      "max": 120,
+      "step": 5,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "story_gap",
+      "label": "Spazio tra storie",
+      "default": 16,
+      "min": 8,
+      "max": 32,
+      "step": 2,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Dimensione testo",
+      "default": 13,
+      "min": 11,
+      "max": 16,
+      "step": 1,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "title_spacing",
+      "label": "Spazio sotto cerchio",
+      "default": 8,
+      "min": 4,
+      "max": 16,
+      "step": 1,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Dimensioni Mobile"
+    },
+    {
+      "type": "range",
+      "id": "story_size_mobile",
+      "label": "Dimensione cerchi",
+      "default": 65,
+      "min": 50,
+      "max": 90,
+      "step": 5,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "story_gap_mobile",
+      "label": "Spazio tra storie",
+      "default": 12,
+      "min": 6,
+      "max": 24,
+      "step": 2,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "title_size_mobile",
+      "label": "Dimensione testo",
+      "default": 11,
+      "min": 10,
+      "max": 14,
+      "step": 1,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Impostazioni Player"
+    },
+    {
+      "type": "range",
+      "id": "story_duration",
+      "label": "Durata storia (sec)",
+      "default": 15,
+      "min": 5,
+      "max": 30,
+      "step": 1,
+      "info": "Usata per immagini e video senza durata automatica"
+    },
+    {
+      "type": "select",
+      "id": "arrow_style",
+      "label": "Stile frecce navigazione",
+      "default": "subtle",
+      "options": [
+        {
+          "value": "subtle",
+          "label": "Sottile"
+        },
+        {
+          "value": "bold",
+          "label": "Evidenziato"
+        },
+        {
+          "value": "instagram",
+          "label": "Instagram"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Stile CTA"
+    },
+    {
+      "type": "select",
+      "id": "cta_style_type",
+      "label": "Tipo di CTA",
+      "default": "instagram",
+      "options": [
+        {
+          "value": "instagram",
+          "label": "Instagram"
+        },
+        {
+          "value": "tiktok",
+          "label": "TikTok"
+        },
+        {
+          "value": "custom",
+          "label": "Personalizzato"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "CTA Personalizzato",
+      "info": "Impostazioni applicate solo se 'Personalizzato' è selezionato"
+    },
+    {
+      "type": "color",
+      "id": "cta_custom_bg",
+      "label": "Sfondo CTA",
+      "default": "#3E491C"
+    },
+    {
+      "type": "color",
+      "id": "cta_custom_text_color",
+      "label": "Colore testo CTA",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "cta_custom_font_size",
+      "label": "Dimensione font",
+      "default": 16,
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px"
+    },
+    {
+      "type": "select",
+      "id": "cta_custom_font_weight",
+      "label": "Peso font",
+      "default": "500",
+      "options": [
+        {
+          "value": "400",
+          "label": "Regular"
+        },
+        {
+          "value": "500",
+          "label": "Medium"
+        },
+        {
+          "value": "600",
+          "label": "Semibold"
+        },
+        {
+          "value": "700",
+          "label": "Bold"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "cta_custom_padding",
+      "label": "Padding CTA",
+      "default": 12,
+      "min": 8,
+      "max": 24,
+      "step": 2,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "cta_custom_radius",
+      "label": "Border radius",
+      "default": 8,
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "cta_custom_position",
+      "label": "Posizione dal basso",
+      "default": 100,
+      "min": 20,
+      "max": 200,
+      "step": 10,
+      "unit": "px"
+    },
+    {
+      "type": "checkbox",
+      "id": "nascondi_mobile",
+      "label": "Nascondi da Mobile",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "nascondi_desktop",
+      "label": "Nascondi da Desktop",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top Mobile",
+      "default": 20,
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom Mobile",
+      "default": 20,
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top Desktop",
+      "default": 40,
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom Desktop",
+      "default": 40,
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "margin_top_mobile",
+      "label": "Margin Top Mobile",
+      "default": 0,
+      "min": -100,
+      "max": 100,
+      "step": 2,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_mobile",
+      "label": "Margin Bottom Mobile",
+      "default": 0,
+      "min": -100,
+      "max": 100,
+      "step": 2,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "margin_top_desktop",
+      "label": "Margin Top Desktop",
+      "default": 0,
+      "min": -200,
+      "max": 200,
+      "step": 4,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_desktop",
+      "label": "Margin Bottom Desktop",
+      "default": 0,
+      "min": -200,
+      "max": 200,
+      "step": 4,
+      "unit": "px"
+    },
+    {
+      "type": "select",
+      "id": "max_dimensione",
+      "label": "Larghezza Max Desktop",
+      "options": [
+        {
+          "value": "none",
+          "label": "100%"
+        },
+        {
+          "value": "1400px",
+          "label": "1400px"
+        },
+        {
+          "value": "1300px",
+          "label": "1300px"
+        },
+        {
+          "value": "1200px",
+          "label": "1200px"
+        },
+        {
+          "value": "1100px",
+          "label": "1100px"
+        },
+        {
+          "value": "1000px",
+          "label": "1000px"
+        },
+        {
+          "value": "900px",
+          "label": "900px"
+        },
+        {
+          "value": "800px",
+          "label": "800px"
+        },
+        {
+          "value": "700px",
+          "label": "700px"
+        }
+      ],
+      "default": "1200px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "story",
+      "name": "Storia",
+      "settings": [
+        {
+          "type": "text",
+          "id": "story_title",
+          "label": "Titolo",
+          "default": "Storia"
+        },
+        {
+          "type": "image_picker",
+          "id": "cover_image",
+          "label": "Immagine copertina",
+          "info": "Consigliato: 200x200px"
+        },
+        {
+          "type": "select",
+          "id": "story_type",
+          "label": "Tipo di storia",
+          "default": "video",
+          "options": [
+            {
+              "value": "video",
+              "label": "Video"
+            },
+            {
+              "value": "image",
+              "label": "Immagine"
+            },
+            {
+              "value": "link",
+              "label": "Link diretto"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "video_url",
+          "label": "URL Video",
+          "info": "Per tipo 'Video'"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_url",
+          "label": "Immagine storia",
+          "info": "Per tipo 'Immagine'"
+        },
+        {
+          "type": "url",
+          "id": "link_url",
+          "label": "Link diretto",
+          "info": "Per tipo 'Link diretto'"
+        },
+        {
+          "type": "checkbox",
+          "id": "auto_duration",
+          "label": "Durata automatica",
+          "default": false,
+          "info": "Solo per video - adatta alla lunghezza"
+        },
+        {
+          "type": "checkbox",
+          "id": "has_new_content",
+          "label": "Mostra anello nuovo",
+          "default": false,
+          "info": "Mostra l'anello animato stile TikTok"
+        },
+        {
+          "type": "color",
+          "id": "ring_color",
+          "label": "Colore anello",
+          "default": "#D75C6C"
+        },
+        {
+          "type": "text",
+          "id": "popup_text",
+          "label": "Testo popup hover",
+          "info": "Lascia vuoto per non mostrare"
+        },
+        {
+          "type": "text",
+          "id": "cta_text",
+          "label": "Testo CTA",
+          "default": "Scopri di più"
+        },
+        {
+          "type": "url",
+          "id": "cta_link",
+          "label": "Link CTA"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "TikTok Stories",
+      "category": "Paolina custom",
+      "blocks": [
+        {
+          "type": "story",
+          "settings": {
+            "story_title": "Nuovi Charm",
+            "story_type": "video",
+            "has_new_content": true,
+            "ring_color": "#D75C6C",
+            "cta_text": "Scopri collezione"
+          }
+        },
+        {
+          "type": "story",
+          "settings": {
+            "story_title": "Tutorial",
+            "story_type": "video",
+            "has_new_content": false,
+            "ring_color": "#BBC385",
+            "cta_text": "Crea il tuo"
+          }
+        },
+        {
+          "type": "story",
+          "settings": {
+            "story_title": "Gallery",
+            "story_type": "image",
+            "has_new_content": true,
+            "ring_color": "#F3A2A5",
+            "popup_text": "Le nostre creazioni",
+            "cta_text": "Vedi tutto"
+          }
+        },
+        {
+          "type": "story",
+          "settings": {
+            "story_title": "Shop",
+            "story_type": "link",
+            "link_url": "/collections/all",
+            "has_new_content": false
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -15,18 +15,27 @@
       "type": "announcement-bar",
       "settings": {
         "announcement_text": "Free shipping and returns over $50",
+        "announcement_link": "",
         "announcement_closable": false
       }
     },
     "header": {
       "type": "header",
       "settings": {
-        "desktop_logo_width": 100,
-        "mobile_logo_width": 80,
-        "sticky_index": true,
+        "logo": "shopify://shop_images/Progetto_senza_titolo.png",
+        "desktop_logo_width": 170,
+        "mobile_logo_width": 130,
+        "main_menu_link_list": "main-menu",
+        "hover_menu": true,
+        "main_menu_alignment": "center-left",
+        "header_sticky": true,
+        "sticky_index": false,
         "sticky_collection": true
       }
     }
   },
-  "order": ["announcement-bar", "header"]
+  "order": [
+    "announcement-bar",
+    "header"
+  ]
 }
