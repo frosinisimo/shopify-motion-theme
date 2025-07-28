@@ -9,7 +9,7 @@
  */
 {
   "current": {
-    "color_body_bg": "#FADADA",
+    "color_body_bg": "#ffffff",
     "color_body_text": "#3E491C",
     "color_borders": "#BBC385",
     "color_button": "#3E491C",
@@ -31,11 +31,11 @@
     "color_drawer_button_text": "#FFFFFF",
     "color_modal_overlays": "#000000",
     "color_image_text": "#FFFFFF",
-    "color_image_2": "#F3A2A5",
+    "color_image_2": "#f3a2a5",
     "color_image_2_opacity": 30,
     "color_image_1": "#3E491C",
     "color_image_1_opacity": 40,
-    "color_small_image_bg": "#FADADA",
+    "color_small_image_bg": "#ffffff",
     "color_large_image_bg": "#391B1C",
     "type_header_font_family": "urbanist_n7",
     "type_header_spacing": "0",

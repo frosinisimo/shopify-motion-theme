@@ -1,6 +1,6 @@
 {% comment %}
   Sezione TikTok Stories - Paolina Roma
-  Versione stabile con tutte le funzionalità
+  Versione con alone Instagram e titoli estesi
 {% endcomment %}
 
 <div class="pr-stories-section" style="position: relative; overflow: visible;">
@@ -30,8 +30,9 @@
                         type="button"
                         aria-label="{{ block.settings.story_title }}">
                   <div class="pr-story-circle" 
-                       {% if block.settings.has_new_content %}data-has-ring="true"{% endif %}
-                       style="--ring-color: {{ block.settings.ring_color }};">
+                       {% if block.settings.show_ring %}data-has-ring="true"{% endif %}
+                       data-ring-style="{{ block.settings.ring_style }}"
+                       style="--ring-color: {{ block.settings.ring_color }}; --ring-color-2: {{ block.settings.ring_color_2 }};">
                     <div class="pr-story-ring"></div>
                     <div class="pr-story-image-wrapper">
                       {% if block.settings.cover_image %}
@@ -52,7 +53,7 @@
                       {% endif %}
                     </div>
                   </div>
-                  <p class="pr-story-title">{{ block.settings.story_title }}</p>
+                  <p class="pr-story-title {% if section.settings.title_display_desktop != 'truncate' %}pr-story-title--{{ section.settings.title_display_desktop }}{% endif %}">{{ block.settings.story_title }}</p>
                   
                   {% if section.settings.enable_hover_popup and block.settings.popup_text != blank %}
                     <div class="pr-story-popup-container">
@@ -215,7 +216,6 @@
     padding: 20px {{ section.settings.desktop_padding_left }}px 40px; /* Extra padding bottom for popup */
   }
 
-
   /* Override page-width padding on mobile */
   @media screen and (max-width: 768px) {
     #shopify-section-{{ section.id }} .pr-stories-container.page-width {
@@ -270,10 +270,10 @@
 
   #shopify-section-{{ section.id }} .pr-story-ring {
     position: absolute;
-    top: -4px;
-    left: -4px;
-    right: -4px;
-    bottom: -4px;
+    top: -{{ section.settings.ring_padding }}px;
+    left: -{{ section.settings.ring_padding }}px;
+    right: -{{ section.settings.ring_padding }}px;
+    bottom: -{{ section.settings.ring_padding }}px;
     border-radius: 50%;
     background: transparent;
     z-index: 1;
@@ -281,9 +281,36 @@
     transition: opacity 0.3s ease;
   }
 
+  /* Ring Styles */
   #shopify-section-{{ section.id }} .pr-story-circle[data-has-ring="true"] .pr-story-ring {
     opacity: 1;
+  }
+
+  /* Original Animated Ring */
+  #shopify-section-{{ section.id }} .pr-story-circle[data-has-ring="true"][data-ring-style="original"] .pr-story-ring {
     background: linear-gradient(45deg, var(--ring-color) 0%, var(--ring-color) 50%, rgba(255,255,255,0.8) 100%);
+    animation: pr-rotate-{{ section.id }} 3s linear infinite;
+  }
+
+  /* Instagram Gradient */
+  #shopify-section-{{ section.id }} .pr-story-circle[data-has-ring="true"][data-ring-style="instagram"] .pr-story-ring {
+    background: linear-gradient(45deg, #feda75 0%, #fa7e1e 25%, #d62976 50%, #962fbf 75%, #4f5bd5 100%);
+    animation: pr-rotate-{{ section.id }} 3s linear infinite;
+  }
+
+  /* Close Friends Green */
+  #shopify-section-{{ section.id }} .pr-story-circle[data-has-ring="true"][data-ring-style="close_friends"] .pr-story-ring {
+    background: #70c050;
+  }
+
+  /* Single Color */
+  #shopify-section-{{ section.id }} .pr-story-circle[data-has-ring="true"][data-ring-style="single"] .pr-story-ring {
+    background: var(--ring-color);
+  }
+
+  /* Gradient Custom */
+  #shopify-section-{{ section.id }} .pr-story-circle[data-has-ring="true"][data-ring-style="gradient"] .pr-story-ring {
+    background: linear-gradient(45deg, var(--ring-color) 0%, var(--ring-color-2) 100%);
     animation: pr-rotate-{{ section.id }} 3s linear infinite;
   }
 
@@ -300,7 +327,7 @@
     position: relative;
     z-index: 2;
     background: var(--colorSmallImageBg);
-    border: 3px solid {{ section.settings.border_color }};
+    border: {{ section.settings.border_width }}px solid {{ section.settings.border_color }};
   }
 
   {% unless section.settings.disable_hover_effect %}
@@ -326,8 +353,7 @@
     background: linear-gradient(135deg, {{ section.settings.placeholder_color_1 }} 0%, {{ section.settings.placeholder_color_2 }} 100%);
   }
 
-  
-
+  /* Story Title */
   #shopify-section-{{ section.id }} .pr-story-title {
     font-size: {{ section.settings.title_size }}px;
     font-family: var(--typeBasePrimary), var(--typeBaseFallback);
@@ -339,6 +365,52 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     max-width: {{ section.settings.story_size }}px;
+    padding: 0 2px;
+  }
+
+  /* Extended Titles Desktop */
+  @media screen and (min-width: 769px) {
+    /* Extended - tutto su una riga */
+    #shopify-section-{{ section.id }} .pr-story-title--extended {
+      white-space: nowrap;
+      overflow: visible;
+      text-overflow: unset;
+      max-width: none;
+      text-align: center;
+      line-height: 1.3;
+    }
+    
+    /* Wrap - va a capo se necessario */
+    #shopify-section-{{ section.id }} .pr-story-title--wrap {
+      white-space: normal;
+      overflow: visible;
+      text-overflow: unset;
+      max-width: {{ section.settings.story_size | times: 1.8 }}px;
+      word-wrap: break-word;
+      text-align: center;
+      line-height: 1.3;
+    }
+    
+    /* Per layout centered/distributed con extended, limita comunque */
+    #shopify-section-{{ section.id }} .pr-stories-scroll[data-layout="centered"] .pr-story-title--extended,
+    #shopify-section-{{ section.id }} .pr-stories-scroll[data-layout="distributed"] .pr-story-title--extended {
+      max-width: {{ section.settings.story_size | times: 2 }}px;
+    }
+  }
+
+  /* Link Icon */
+  #shopify-section-{{ section.id }} .pr-story-link-icon {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    width: 24px;
+    height: 24px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #333;
   }
 
   /* Popup Hover */
@@ -738,6 +810,15 @@
 
     #shopify-section-{{ section.id }} .pr-story-title {
       font-size: {{ section.settings.title_size_mobile }}px;
+      max-width: {{ section.settings.story_size_mobile }}px;
+    }
+    
+    /* Mobile mantiene sempre truncate per risparmiare spazio */
+    #shopify-section-{{ section.id }} .pr-story-title--extended,
+    #shopify-section-{{ section.id }} .pr-story-title--wrap {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
       max-width: {{ section.settings.story_size_mobile }}px;
     }
 
@@ -1307,6 +1388,27 @@ document.addEventListener('DOMContentLoaded', function() {
       "info": "Su mobile sarà sempre allineato a sinistra con scroll"
     },
     {
+      "type": "select",
+      "id": "title_display_desktop",
+      "label": "Visualizzazione titoli (Desktop)",
+      "default": "truncate",
+      "options": [
+        {
+          "value": "truncate",
+          "label": "Tronca con ..."
+        },
+        {
+          "value": "extended",
+          "label": "Estendi su una riga"
+        },
+        {
+          "value": "wrap",
+          "label": "Vai a capo se necessario"
+        }
+      ],
+      "info": "Come visualizzare i titoli lunghi su desktop"
+    },
+    {
       "type": "header",
       "content": "Padding Mobile"
     },
@@ -1371,6 +1473,26 @@ document.addEventListener('DOMContentLoaded', function() {
       "id": "border_hover_color",
       "label": "Colore bordo hover",
       "default": "#F3A2A5"
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "label": "Spessore bordo",
+      "default": 3,
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "ring_padding",
+      "label": "Spazio anello",
+      "default": 4,
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "unit": "px"
     },
     {
       "type": "checkbox",
@@ -1830,17 +1952,56 @@ document.addEventListener('DOMContentLoaded', function() {
           "info": "Solo per video - adatta alla lunghezza"
         },
         {
+          "type": "header",
+          "content": "Anello Storia"
+        },
+        {
           "type": "checkbox",
-          "id": "has_new_content",
-          "label": "Mostra anello nuovo",
-          "default": false,
-          "info": "Mostra l'anello animato stile TikTok"
+          "id": "show_ring",
+          "label": "Mostra anello",
+          "default": false
+        },
+        {
+          "type": "select",
+          "id": "ring_style",
+          "label": "Stile anello",
+          "default": "instagram",
+          "options": [
+            {
+              "value": "original",
+              "label": "Originale animato"
+            },
+            {
+              "value": "instagram",
+              "label": "Instagram Gradient"
+            },
+            {
+              "value": "close_friends",
+              "label": "Amici stretti (Verde)"
+            },
+            {
+              "value": "single",
+              "label": "Colore singolo"
+            },
+            {
+              "value": "gradient",
+              "label": "Gradiente personalizzato"
+            }
+          ]
         },
         {
           "type": "color",
           "id": "ring_color",
           "label": "Colore anello",
-          "default": "#D75C6C"
+          "default": "#D75C6C",
+          "info": "Per stili 'Originale', 'Colore singolo' o gradiente"
+        },
+        {
+          "type": "color",
+          "id": "ring_color_2",
+          "label": "Colore 2 gradiente",
+          "default": "#F3A2A5",
+          "info": "Solo per 'Gradiente personalizzato'"
         },
         {
           "type": "text",
@@ -1872,8 +2033,8 @@ document.addEventListener('DOMContentLoaded', function() {
           "settings": {
             "story_title": "Nuovi Charm",
             "story_type": "video",
-            "has_new_content": true,
-            "ring_color": "#D75C6C",
+            "show_ring": true,
+            "ring_style": "instagram",
             "cta_text": "Scopri collezione"
           }
         },
@@ -1882,7 +2043,8 @@ document.addEventListener('DOMContentLoaded', function() {
           "settings": {
             "story_title": "Tutorial",
             "story_type": "video",
-            "has_new_content": false,
+            "show_ring": true,
+            "ring_style": "original",
             "ring_color": "#BBC385",
             "cta_text": "Crea il tuo"
           }
@@ -1892,10 +2054,22 @@ document.addEventListener('DOMContentLoaded', function() {
           "settings": {
             "story_title": "Gallery",
             "story_type": "image",
-            "has_new_content": true,
+            "show_ring": true,
+            "ring_style": "gradient",
             "ring_color": "#F3A2A5",
+            "ring_color_2": "#FADADA",
             "popup_text": "Le nostre creazioni",
             "cta_text": "Vedi tutto"
+          }
+        },
+        {
+          "type": "story",
+          "settings": {
+            "story_title": "VIP Club",
+            "story_type": "video",
+            "show_ring": true,
+            "ring_style": "close_friends",
+            "cta_text": "Unisciti"
           }
         },
         {
@@ -1904,7 +2078,7 @@ document.addEventListener('DOMContentLoaded', function() {
             "story_title": "Shop",
             "story_type": "link",
             "link_url": "/collections/all",
-            "has_new_content": false
+            "show_ring": false
           }
         }
       ]

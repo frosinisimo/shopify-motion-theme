@@ -1,22 +1,8 @@
 {%- liquid
   assign animation_row = 2
-  
-  # Determina la posizione del drawer basandosi sul layout mobile
   assign drawer_position = 'right'
-  if mobile_logo_alignment != blank
-    if mobile_logo_alignment == 'center'
-      assign drawer_position = 'left'
-    endif
-  elsif logo_alignment == 'center'
+  if logo_alignment == 'center'
     assign drawer_position = 'left'
-  endif
-  
-  # Fallback per compatibilità
-  if desktop_logo_alignment == blank
-    assign desktop_logo_alignment = logo_alignment
-  endif
-  if mobile_logo_alignment == blank
-    assign mobile_logo_alignment = logo_alignment
   endif
 -%}
 

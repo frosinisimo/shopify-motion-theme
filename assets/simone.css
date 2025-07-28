@@ -7,3 +7,8 @@
 @media only screen and (max-width: 768px) {
 
 }
+
+
+.pr-story-link-icon{
+  display:none!important;
+}

@@ -21,11 +21,31 @@
             "video_url": "https://cdn.shopify.com/videos/c/o/v/63d549fa92f5475e8f6aa60314f10d17.mp4",
             "link_url": "",
             "auto_duration": true,
-            "has_new_content": true,
+            "show_ring": true,
+            "ring_style": "close_friends",
             "ring_color": "#d75c6c",
+            "ring_color_2": "#f3a2a5",
             "popup_text": "",
             "cta_text": "Scopri collezione",
             "cta_link": "shopify://collections/all"
+          }
+        },
+        "story_tRej8m": {
+          "type": "story",
+          "settings": {
+            "story_title": "Il nostro negozio",
+            "cover_image": "shopify://shop_images/453812655_1538245877107350_745914952647272547_n.jpg",
+            "story_type": "link",
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/63d549fa92f5475e8f6aa60314f10d17.mp4",
+            "link_url": "shopify://products/demo-t-shirt-automatic-recoloring-out-of-stock-test-product",
+            "auto_duration": true,
+            "show_ring": true,
+            "ring_style": "instagram",
+            "ring_color": "#bbc385",
+            "ring_color_2": "#f3a2a5",
+            "popup_text": "",
+            "cta_text": "Visitaci",
+            "cta_link": ""
           }
         },
         "story_6fCp3B": {
@@ -33,13 +53,15 @@
           "settings": {
             "story_title": "Il nostro negozio",
             "cover_image": "shopify://shop_images/453812655_1538245877107350_745914952647272547_n.jpg",
-            "story_type": "image",
+            "story_type": "video",
             "video_url": "https://cdn.shopify.com/videos/c/o/v/63d549fa92f5475e8f6aa60314f10d17.mp4",
             "image_url": "shopify://shop_images/cpb-test-task--_6VwQ-HIO0QWAUIEPJ6XIQdL.png",
             "link_url": "",
             "auto_duration": true,
-            "has_new_content": true,
+            "show_ring": true,
+            "ring_style": "instagram",
             "ring_color": "#bbc385",
+            "ring_color_2": "#f3a2a5",
             "popup_text": "Vieni a trovarci nel cuore di Roma",
             "cta_text": "Visitaci",
             "cta_link": "shopify://pages/contact"
@@ -50,61 +72,33 @@
           "settings": {
             "story_title": "Il nostro negozio",
             "cover_image": "shopify://shop_images/453812655_1538245877107350_745914952647272547_n.jpg",
-            "story_type": "link",
+            "story_type": "video",
             "video_url": "https://cdn.shopify.com/videos/c/o/v/63d549fa92f5475e8f6aa60314f10d17.mp4",
             "link_url": "shopify://products/demo-t-shirt-automatic-recoloring-out-of-stock-test-product",
             "auto_duration": true,
-            "has_new_content": false,
+            "show_ring": true,
+            "ring_style": "instagram",
             "ring_color": "#bbc385",
+            "ring_color_2": "#f3a2a5",
             "popup_text": "",
             "cta_text": "Visitaci",
             "cta_link": ""
           }
         },
-        "story_rtkMik": {
+        "story_TrYnTt": {
           "type": "story",
           "settings": {
             "story_title": "Il nostro negozio",
             "cover_image": "shopify://shop_images/453812655_1538245877107350_745914952647272547_n.jpg",
             "story_type": "video",
             "video_url": "https://cdn.shopify.com/videos/c/o/v/63d549fa92f5475e8f6aa60314f10d17.mp4",
-            "link_url": "",
+            "link_url": "shopify://products/demo-t-shirt-automatic-recoloring-out-of-stock-test-product",
             "auto_duration": true,
-            "has_new_content": true,
-            "ring_color": "#d75c6c",
-            "popup_text": "Vieni a trovarci nel cuore di Roma",
-            "cta_text": "Visitaci",
-            "cta_link": ""
-          }
-        },
-        "story_TTpWb4": {
-          "type": "story",
-          "settings": {
-            "story_title": "Il nostro negozio",
-            "cover_image": "shopify://shop_images/453812655_1538245877107350_745914952647272547_n.jpg",
-            "story_type": "video",
-            "video_url": "https://cdn.shopify.com/videos/c/o/v/63d549fa92f5475e8f6aa60314f10d17.mp4",
-            "link_url": "",
-            "auto_duration": true,
-            "has_new_content": true,
-            "ring_color": "#f3a2a5",
-            "popup_text": "Vieni a trovarci nel cuore di Roma",
-            "cta_text": "Visitaci",
-            "cta_link": ""
-          }
-        },
-        "story_WhQKdC": {
-          "type": "story",
-          "settings": {
-            "story_title": "Il nostro negozio",
-            "cover_image": "shopify://shop_images/453812655_1538245877107350_745914952647272547_n.jpg",
-            "story_type": "video",
-            "video_url": "https://cdn.shopify.com/videos/c/o/v/63d549fa92f5475e8f6aa60314f10d17.mp4",
-            "link_url": "",
-            "auto_duration": true,
-            "has_new_content": true,
-            "ring_color": "#f3a2a5",
-            "popup_text": "Vieni a trovarci nel cuore di Roma",
+            "show_ring": true,
+            "ring_style": "instagram",
+            "ring_color": "#bbc385",
+            "ring_color_2": "#f3a2a5",
+            "popup_text": "",
             "cta_text": "Visitaci",
             "cta_link": ""
           }
@@ -112,11 +106,10 @@
       },
       "block_order": [
         "story_RTfDGc",
+        "story_tRej8m",
         "story_6fCp3B",
         "story_mrR84D",
-        "story_rtkMik",
-        "story_TTpWb4",
-        "story_WhQKdC"
+        "story_TrYnTt"
       ],
       "name": "TikTok Stories",
       "settings": {
@@ -124,7 +117,8 @@
         "heading_size": "h2",
         "heading_position": "center",
         "fullwidth": true,
-        "stories_layout": "distributed",
+        "stories_layout": "centered",
+        "title_display_desktop": "extended",
         "mobile_padding_left": 50,
         "mobile_padding_right": 50,
         "desktop_padding_left": 110,
@@ -132,7 +126,9 @@
         "text_color": "#3e491c",
         "border_color": "#fff5ea",
         "border_hover_color": "#f3a2a5",
-        "disable_hover_effect": false,
+        "border_width": 3,
+        "ring_padding": 4,
+        "disable_hover_effect": true,
         "placeholder_color_1": "#fadada",
         "placeholder_color_2": "#f3a2a5",
         "enable_hover_popup": true,
