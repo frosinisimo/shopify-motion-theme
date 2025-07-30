@@ -194,6 +194,12 @@
 </div>
 
 <style>
+
+  @media only screen and (min-width: 769px) {
+  p.pr-story-title.pr-story-title--extended{
+    font-weight: 600 !important;
+}}
+  
   /* Container principale */
   #shopify-section-{{ section.id }} .pr-stories-section {
     background-color: {{ section.settings.background_color }};
@@ -213,7 +219,7 @@
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
     -ms-overflow-style: none;
-    padding: 20px {{ section.settings.desktop_padding_left }}px 40px; /* Extra padding bottom for popup */
+    padding: {{ section.settings.padding_top_desktop }}px {{ section.settings.desktop_padding_left }}px {{ section.settings.padding_bottom_desktop }}px; /* Extra padding bottom for popup */
   }
 
   /* Override page-width padding on mobile */
@@ -417,7 +423,7 @@
   {% if section.settings.enable_hover_popup %}
   #shopify-section-{{ section.id }} .pr-story-popup-container {
     position: absolute;
-    bottom: 72%;
+    bottom: 60%;
     left: 50%;
     transform: translateX(-50%);
     padding-bottom: 10px;
@@ -800,7 +806,7 @@
   @media screen and (max-width: 768px) {
     #shopify-section-{{ section.id }} .pr-stories-scroll {
       gap: {{ section.settings.story_gap_mobile }}px;
-      padding: 15px 10px 30px;
+      padding: {{ section.settings.padding_top_mobile }}px 10px {{ section.settings.padding_bottom_mobile }}px;
     }
 
     #shopify-section-{{ section.id }} .pr-story-circle {
@@ -857,8 +863,8 @@
     }
 
     #shopify-section-{{ section.id }} {
-      padding-top: {{ section.settings.padding_top_desktop }}px;
-      padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
+      padding-top: 0px;
+      padding-bottom: 0px;
       margin-top: {{ section.settings.margin_top_desktop }}px;
       margin-bottom: {{ section.settings.margin_bottom_desktop }}px;
     }
@@ -872,8 +878,8 @@
 
   @media only screen and (max-width: 768px) {
     #shopify-section-{{ section.id }} {
-      padding-top: {{ section.settings.padding_top_mobile }}px;
-      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+      padding-top: 0px;
+      padding-bottom: 0px;
       margin-top: {{ section.settings.margin_top_mobile }}px;
       margin-bottom: {{ section.settings.margin_bottom_mobile }}px;
     }
@@ -884,6 +890,32 @@
       }
     {% endif %}
   }
+
+  @media only screen and (max-width: 768px) {
+    #shopify-section-{{ section.id }} {
+      padding-top: 0px;
+      padding-bottom: 0px;
+      margin-top: {{ section.settings.margin_top_mobile }}px;
+      margin-bottom: {{ section.settings.margin_bottom_mobile }}px;
+    }
+
+    {% if section.settings.nascondi_mobile %}
+      #shopify-section-{{ section.id }} {
+        display: none;
+      }
+    {% endif %}
+  }
+
+  /* Nascondi sezione su pagine specifiche */
+{% if section.settings.hide_on_pages != blank %}
+  {% assign hide_classes = section.settings.hide_on_pages | split: ',' %}
+  {% for class in hide_classes %}
+    {% assign clean_class = class | strip %}
+    body.{{ clean_class }} #shopify-section-{{ section.id }} {
+      display: none !important;
+    }
+  {% endfor %}
+{% endif %}
 </style>
 
 <script>
@@ -1887,7 +1919,14 @@ document.addEventListener('DOMContentLoaded', function() {
         }
       ],
       "default": "1200px"
-    }
+    },
+    {
+  "type": "text",
+  "id": "hide_on_pages",
+  "label": "Nascondi su pagine",
+  "info": "Inserisci classi body separate da virgola (es: template-index, template-product, template-cart)",
+  "placeholder": "template-index, template-product"
+}
   ],
   "blocks": [
     {

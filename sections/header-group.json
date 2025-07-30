@@ -27,15 +27,210 @@
         "mobile_logo_width": 130,
         "main_menu_link_list": "main-menu",
         "hover_menu": true,
-        "main_menu_alignment": "center-left",
+        "main_menu_alignment": "center-drawer",
         "header_sticky": true,
         "sticky_index": false,
         "sticky_collection": true
+      }
+    },
+    "tiktok_stories_pzPWmh": {
+      "type": "tiktok-stories",
+      "blocks": {
+        "story_4ADrh3": {
+          "type": "story",
+          "settings": {
+            "story_title": "💍 Aftercare",
+            "cover_image": "shopify://shop_images/458396257_532038849243302_6792501506712993303_n.jpg",
+            "story_type": "video",
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/63d549fa92f5475e8f6aa60314f10d17.mp4",
+            "link_url": "",
+            "auto_duration": true,
+            "show_ring": true,
+            "ring_style": "close_friends",
+            "ring_color": "#d75c6c",
+            "ring_color_2": "#f3a2a5",
+            "popup_text": "",
+            "cta_text": "Scopri collezione",
+            "cta_link": "shopify://collections/all"
+          }
+        },
+        "story_KzP9hd": {
+          "type": "story",
+          "settings": {
+            "story_title": "Our Charms",
+            "cover_image": "shopify://shop_images/470678096_18136180312372876_2459897654042291878_n.jpg",
+            "story_type": "link",
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/63d549fa92f5475e8f6aa60314f10d17.mp4",
+            "link_url": "shopify://products/demo-t-shirt-automatic-recoloring-out-of-stock-test-product",
+            "auto_duration": true,
+            "show_ring": false,
+            "ring_style": "instagram",
+            "ring_color": "#bbc385",
+            "ring_color_2": "#f3a2a5",
+            "popup_text": "",
+            "cta_text": "Visitaci",
+            "cta_link": ""
+          }
+        },
+        "story_MJ44hV": {
+          "type": "story",
+          "settings": {
+            "story_title": "Permanent",
+            "cover_image": "shopify://shop_images/453812655_1538245877107350_745914952647272547_n.jpg",
+            "story_type": "video",
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/63d549fa92f5475e8f6aa60314f10d17.mp4",
+            "image_url": "shopify://shop_images/cpb-test-task--_6VwQ-HIO0QWAUIEPJ6XIQdL.png",
+            "link_url": "",
+            "auto_duration": true,
+            "show_ring": true,
+            "ring_style": "instagram",
+            "ring_color": "#bbc385",
+            "ring_color_2": "#f3a2a5",
+            "popup_text": "Vieni a trovarci nel cuore di Roma",
+            "cta_text": "Visitaci",
+            "cta_link": "shopify://pages/contact"
+          }
+        },
+        "story_pewGbz": {
+          "type": "story",
+          "settings": {
+            "story_title": "Charm Bar",
+            "cover_image": "shopify://shop_images/453778215_3388882698080869_6114800088881019784_n_4856ba4f-725c-4d63-9f59-bc3413755cc3.jpg",
+            "story_type": "video",
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/63d549fa92f5475e8f6aa60314f10d17.mp4",
+            "link_url": "shopify://products/demo-t-shirt-automatic-recoloring-out-of-stock-test-product",
+            "auto_duration": true,
+            "show_ring": true,
+            "ring_style": "instagram",
+            "ring_color": "#bbc385",
+            "ring_color_2": "#f3a2a5",
+            "popup_text": "",
+            "cta_text": "Visitaci",
+            "cta_link": ""
+          }
+        },
+        "story_pxCzqH": {
+          "type": "story",
+          "settings": {
+            "story_title": "Materials",
+            "cover_image": "shopify://shop_images/453879527_1955015968275003_8872433297332983490_n.jpg",
+            "story_type": "video",
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/63d549fa92f5475e8f6aa60314f10d17.mp4",
+            "link_url": "shopify://products/demo-t-shirt-automatic-recoloring-out-of-stock-test-product",
+            "auto_duration": true,
+            "show_ring": true,
+            "ring_style": "instagram",
+            "ring_color": "#bbc385",
+            "ring_color_2": "#f3a2a5",
+            "popup_text": "",
+            "cta_text": "Visitaci",
+            "cta_link": ""
+          }
+        },
+        "story_AVKGP9": {
+          "type": "story",
+          "settings": {
+            "story_title": "Materials",
+            "cover_image": "shopify://shop_images/453879527_1955015968275003_8872433297332983490_n.jpg",
+            "story_type": "video",
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/63d549fa92f5475e8f6aa60314f10d17.mp4",
+            "link_url": "shopify://products/demo-t-shirt-automatic-recoloring-out-of-stock-test-product",
+            "auto_duration": true,
+            "show_ring": true,
+            "ring_style": "instagram",
+            "ring_color": "#bbc385",
+            "ring_color_2": "#f3a2a5",
+            "popup_text": "",
+            "cta_text": "Visitaci",
+            "cta_link": ""
+          }
+        },
+        "story_kXbM9k": {
+          "type": "story",
+          "settings": {
+            "story_title": "Materials",
+            "cover_image": "shopify://shop_images/453879527_1955015968275003_8872433297332983490_n.jpg",
+            "story_type": "video",
+            "video_url": "https://cdn.shopify.com/videos/c/o/v/63d549fa92f5475e8f6aa60314f10d17.mp4",
+            "link_url": "shopify://products/demo-t-shirt-automatic-recoloring-out-of-stock-test-product",
+            "auto_duration": true,
+            "show_ring": true,
+            "ring_style": "instagram",
+            "ring_color": "#bbc385",
+            "ring_color_2": "#f3a2a5",
+            "popup_text": "",
+            "cta_text": "Visitaci",
+            "cta_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "story_4ADrh3",
+        "story_KzP9hd",
+        "story_MJ44hV",
+        "story_pewGbz",
+        "story_pxCzqH",
+        "story_AVKGP9",
+        "story_kXbM9k"
+      ],
+      "name": "TikTok Stories",
+      "settings": {
+        "heading": "",
+        "heading_size": "h3",
+        "heading_position": "left",
+        "fullwidth": true,
+        "stories_layout": "centered",
+        "title_display_desktop": "extended",
+        "mobile_padding_left": 50,
+        "mobile_padding_right": 50,
+        "desktop_padding_left": 0,
+        "background_color": "#fff5ea",
+        "text_color": "#3e491c",
+        "border_color": "#fff5ea",
+        "border_hover_color": "#f3a2a5",
+        "border_width": 3,
+        "ring_padding": 4,
+        "disable_hover_effect": true,
+        "placeholder_color_1": "#fadada",
+        "placeholder_color_2": "#f3a2a5",
+        "enable_hover_popup": true,
+        "popup_bg_color": "#3e491c",
+        "popup_text_color": "#ffffff",
+        "story_size": 80,
+        "story_gap": 32,
+        "title_size": 15,
+        "title_spacing": 16,
+        "story_size_mobile": 65,
+        "story_gap_mobile": 12,
+        "title_size_mobile": 11,
+        "story_duration": 15,
+        "arrow_style": "instagram",
+        "cta_style_type": "custom",
+        "cta_custom_bg": "#3e491c",
+        "cta_custom_text_color": "#ffffff",
+        "cta_custom_font_size": 16,
+        "cta_custom_font_weight": "500",
+        "cta_custom_padding": 12,
+        "cta_custom_radius": 8,
+        "cta_custom_position": 100,
+        "nascondi_mobile": false,
+        "nascondi_desktop": false,
+        "padding_top_mobile": 13,
+        "padding_bottom_mobile": 12,
+        "padding_top_desktop": 6,
+        "padding_bottom_desktop": 24,
+        "margin_top_mobile": -14,
+        "margin_bottom_mobile": 0,
+        "margin_top_desktop": -8,
+        "margin_bottom_desktop": 0,
+        "max_dimensione": "none",
+        "hide_on_pages": ""
       }
     }
   },
   "order": [
     "announcement-bar",
-    "header"
+    "header",
+    "tiktok_stories_pzPWmh"
   ]
 }

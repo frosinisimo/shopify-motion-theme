@@ -17,25 +17,37 @@
         "promotion-1": {
           "type": "promotion",
           "settings": {
+            "enable_image": true,
+            "image_mask": "none",
+            "image_width": 650,
             "title": "Inspired by nature",
             "text": "<p>You'll find all the brands we carry here in a restored 1800's tile factory warehouse in downtown Williamsburg.</p>",
-            "button_label": "Our story"
+            "button_label": "Our story",
+            "button_link": ""
           }
         },
         "promotion-2": {
           "type": "promotion",
           "settings": {
+            "enable_image": true,
+            "image_mask": "none",
+            "image_width": 650,
             "title": "James Harrison Interview",
             "text": "<p>You'll find our core product line here in a restored 1800's tile factory warehouse in downtown Philadelphia.</p>",
-            "button_label": "Read the journal"
+            "button_label": "Read the journal",
+            "button_link": ""
           }
         },
         "promotion-3": {
           "type": "promotion",
           "settings": {
+            "enable_image": true,
+            "image_mask": "none",
+            "image_width": 650,
             "title": "Seasonal savings",
             "text": "<p>Save up to 30% on last season's apparel. Shop now while supplies last with free shipping over $100.</p>",
-            "button_label": "Shop sale"
+            "button_label": "Shop sale",
+            "button_link": ""
           }
         }
       },
@@ -44,8 +56,10 @@
         "promotion-2",
         "promotion-3"
       ],
+      "disabled": true,
       "settings": {
-        "hide_homepage": true
+        "hide_homepage": true,
+        "align_text": "left"
       }
     },
     "footer": {
@@ -54,12 +68,14 @@
         "logo_social": {
           "type": "logo_social",
           "settings": {
-            "desktop_logo_height": 35
+            "desktop_logo_height": 35,
+            "container_width": 20
           }
         },
         "menu-1": {
           "type": "menu",
           "settings": {
+            "show_footer_title": true,
             "menu": "main-menu",
             "container_width": 15
           }
@@ -67,17 +83,25 @@
         "menu-2": {
           "type": "menu",
           "settings": {
+            "show_footer_title": true,
             "menu": "footer",
             "container_width": 15
           }
         },
         "menu-3": {
           "type": "menu",
-          "settings": {}
+          "settings": {
+            "show_footer_title": true,
+            "menu": "footer",
+            "container_width": 20
+          }
         },
         "newsletter": {
           "type": "newsletter",
           "settings": {
+            "show_footer_title": true,
+            "title": "Sign up and save",
+            "richtext": "<p>Subscribe to get special offers, free giveaways, and once-in-a-lifetime deals.</p>",
             "container_width": 25
           }
         }
@@ -90,9 +114,13 @@
         "newsletter"
       ],
       "settings": {
+        "show_locale_selector": true,
+        "show_currency_selector": true,
+        "show_currency_flags": true,
         "show_payment_icons": false,
         "colorize_payment_icons": true,
-        "show_copyright": true
+        "show_copyright": true,
+        "copyright_text": ""
       }
     }
   },

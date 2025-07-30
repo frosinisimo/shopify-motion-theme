@@ -1,0 +1,1503 @@
+<!-- Advanced Tutorial Overlay Section -->
+<div id="pr-tutorial-overlay-{{ section.id }}" class="pr-tutorial-overlay" style="display: none;">
+  <!-- Backdrop with spotlight hole -->
+  <div class="pr-tutorial-backdrop">
+    <svg class="pr-spotlight-svg" width="100%" height="100%">
+      <defs>
+        <mask id="pr-spotlight-mask-{{ section.id }}">
+          <rect width="100%" height="100%" fill="white"/>
+          <rect class="pr-spotlight-hole" x="0" y="0" width="0" height="0" rx="12" fill="black"/>
+        </mask>
+      </defs>
+      <rect width="100%" height="100%" fill="rgba(0,0,0,0.85)" mask="url(#pr-spotlight-mask-{{ section.id }})"/>
+    </svg>
+  </div>
+  
+  <!-- Confetti container -->
+  <div class="pr-confetti-container"></div>
+  
+  <!-- Tutorial popup -->
+  <div class="pr-tutorial-popup" data-position="right">
+    <!-- Progress indicator -->
+    <div class="pr-tutorial-header">
+      <div class="pr-tutorial-progress">
+        <div class="pr-tutorial-progress-fill"></div>
+      </div>
+      <button class="pr-tutorial-close" aria-label="Chiudi tutorial">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="14" y1="6" x2="6" y2="14"></line>
+          <line x1="6" y1="6" x2="14" y2="14"></line>
+        </svg>
+      </button>
+    </div>
+    
+    <!-- Steps content -->
+    <div class="pr-tutorial-content">
+      {% for step in section.blocks %}
+        <div class="pr-tutorial-step" 
+             data-step="{{ forloop.index }}" 
+             data-target="{{ step.settings.target_class }}"
+             data-position="{{ step.settings.position }}"
+             data-confetti="{{ step.settings.enable_confetti }}"
+             style="display: none;">
+          
+          <!-- Step number badge with emoji -->
+          <div class="pr-tutorial-badge">
+            <span class="pr-badge-emoji">{{ step.settings.step_emoji | default: '✨' }}</span>
+            <span class="pr-badge-text">{{ forloop.index }}/{{ section.blocks.size }}</span>
+          </div>
+          
+          <!-- Title with animation -->
+          <h3 class="pr-tutorial-title">{{ step.settings.title }}</h3>
+          
+          <!-- Rich text description -->
+          <div class="pr-tutorial-description">
+            {{ step.settings.description }}
+          </div>
+          
+          <!-- Media (image or video) -->
+          {% if step.settings.video != blank %}
+            <div class="pr-tutorial-media pr-tutorial-video">
+              <video controls playsinline muted loop>
+                <source src="{{ step.settings.video }}" type="video/mp4">
+              </video>
+            </div>
+          {% elsif step.settings.image != blank %}
+            <div class="pr-tutorial-media pr-tutorial-image">
+              <img src="{{ step.settings.image | img_url: 'master' }}" 
+                   alt="{{ step.settings.title }}" 
+                   loading="lazy">
+            </div>
+          {% endif %}
+          
+        </div>
+      {% endfor %}
+    </div>
+    
+    <!-- Navigation -->
+    <div class="pr-tutorial-nav">
+      <button class="pr-tutorial-nav-btn pr-tutorial-prev" aria-label="Indietro">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="10 4 6 8 10 12"></polyline>
+        </svg>
+      </button>
+      
+      <div class="pr-tutorial-dots">
+        {% for step in section.blocks %}
+          <button class="pr-tutorial-dot" 
+                  data-dot="{{ forloop.index }}"
+                  aria-label="Vai allo step {{ forloop.index }}">
+            <span class="pr-dot-fill"></span>
+          </button>
+        {% endfor %}
+      </div>
+      
+      <button class="pr-tutorial-nav-btn pr-tutorial-next" aria-label="Avanti">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="6 4 10 8 6 12"></polyline>
+        </svg>
+      </button>
+    </div>
+    
+    <!-- Action buttons -->
+    <div class="pr-tutorial-actions">
+      <button class="pr-tutorial-skip">
+        <span>Salta</span>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+          <polyline points="9 4 13 8 9 12"></polyline>
+          <line x1="3" y1="8" x2="13" y2="8"></line>
+        </svg>
+      </button>
+      <button class="pr-tutorial-action-btn pr-tutorial-continue">
+        <span class="pr-action-text">Continua</span>
+        <span class="pr-action-emoji">👉</span>
+      </button>
+    </div>
+  </div>
+  
+  <!-- Pointer arrow -->
+  <div class="pr-tutorial-arrow" style="display: none;">
+    <svg width="24" height="24" viewBox="0 0 24 24">
+      <path d="M12 2 L22 12 L12 22 L12 14 L2 14 L2 10 L12 10 Z" 
+            fill="{{ section.settings.arrow_color }}"/>
+    </svg>
+  </div>
+</div>
+
+<!-- Trigger button -->
+{% if section.settings.show_trigger %}
+  <div class="pr-tutorial-trigger-wrapper">
+    <button class="pr-tutorial-trigger pr-trigger-style-{{ section.settings.trigger_style }}">
+      <span>{{ section.settings.trigger_text }}</span>
+      {% if section.settings.trigger_icon %}
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="8" cy="8" r="7"></circle>
+          <path d="M8 11V8M8 5h.01"></path>
+        </svg>
+      {% endif %}
+    </button>
+  </div>
+{% endif %}
+
+<style>
+  /* Base overlay styles */
+  #shopify-section-{{ section.id }} .pr-tutorial-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 99999;
+    pointer-events: none;
+  }
+  
+  #shopify-section-{{ section.id }} .pr-tutorial-overlay * {
+    pointer-events: auto;
+  }
+  
+  /* Backdrop with spotlight */
+  #shopify-section-{{ section.id }} .pr-tutorial-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  
+  #shopify-section-{{ section.id }} .pr-spotlight-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  
+  #shopify-section-{{ section.id }} .pr-spotlight-hole {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  /* Popup styles */
+  #shopify-section-{{ section.id }} .pr-tutorial-popup {
+    position: absolute;
+    background: {{ section.settings.popup_bg }};
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.1);
+    width: 380px;
+    max-width: 90vw;
+    animation: pr-slideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    overflow: hidden;
+  }
+  
+  /* Header with progress */
+  #shopify-section-{{ section.id }} .pr-tutorial-header {
+    position: relative;
+    height: 48px;
+    background: {{ section.settings.header_bg }};
+  }
+  
+  #shopify-section-{{ section.id }} .pr-tutorial-progress {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.1);
+  }
+  
+  #shopify-section-{{ section.id }} .pr-tutorial-progress-fill {
+    height: 100%;
+    background: {{ section.settings.accent_color }};
+    transition: width 0.4s ease;
+    box-shadow: 0 0 10px {{ section.settings.accent_color }}40;
+  }
+  
+  #shopify-section-{{ section.id }} .pr-tutorial-close {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: {{ section.settings.text_color }};
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    opacity: 0.6;
+  }
+  
+  #shopify-section-{{ section.id }} .pr-tutorial-close:hover {
+    opacity: 1;
+    background: rgba(255, 255, 255, 0.1);
+  }
+  
+  /* Content area */
+  #shopify-section-{{ section.id }} .pr-tutorial-content {
+    padding: 24px;
+  }
+  
+  #shopify-section-{{ section.id }} .pr-tutorial-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: {{ section.settings.accent_color }}20;
+    color: {{ section.settings.accent_color }};
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+  }
+  
+  #shopify-section-{{ section.id }} .pr-tutorial-title {
+    font-family: var(--font-heading-family);
+    font-size: 22px;
+    font-weight: 700;
+    color: {{ section.settings.title_color }};
+    margin-bottom: 12px;
+    line-height: 1.3;
+  }
+  
+  #shopify-section-{{ section.id }} .pr-tutorial-description {
+    font-family: var(--font-body-family);
+    font-size: 15px;
+    line-height: 1.6;
+    color: {{ section.settings.text_color }};
+    margin-bottom: 20px;
+  }
+  
+  #shopify-section-{{ section.id }} .pr-tutorial-description strong {
+    font-weight: 600;
+    color: {{ section.settings.title_color }};
+  }
+  
+  #shopify-section-{{ section.id }} .pr-tutorial-description em {
+    font-style: italic;
+  }
+  
+  /* Media styles */
+  #shopify-section-{{ section.id }} .pr-tutorial-media {
+    margin: 20px -24px;
+    position: relative;
+    background: #000;
+  }
+  
+  #shopify-section-{{ section.id }} .pr-tutorial-media img,
+  #shopify-section-{{ section.id }} .pr-tutorial-media video {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  
+  #shopify-section-{{ section.id }} .pr-tutorial-video video {
+    max-height: 280px;
+    object-fit: contain;
+  }
+  
+  /* Navigation */
+  #shopify-section-{{ section.id }} .pr-tutorial-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    padding: 0 24px 20px;
+  }
+  
+  #shopify-section-{{ section.id }} .pr-tutorial-nav-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: {{ section.settings.nav_bg }};
+    border: none;
+    color: {{ section.settings.nav_color }};
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+  }
+  
+  #shopify-section-{{ section.id }} .pr-tutorial-nav-btn:hover:not(:disabled) {
+    transform: scale(1.1);
+    background: {{ section.settings.accent_color }};
+    color: white;
+  }
+  
+  #shopify-section-{{ section.id }} .pr-tutorial-nav-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+  
+  #shopify-section-{{ section.id }} .pr-tutorial-dots {
+    display: flex;
+    gap: 6px;
+  }
+  
+  #shopify-section-{{ section.id }} .pr-tutorial-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: {{ section.settings.nav_bg }};
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0;
+  }
+  
+  #shopify-section-{{ section.id }} .pr-tutorial-dot:hover {
+    transform: scale(1.2);
+  }
+  
+  #shopify-section-{{ section.id }} .pr-tutorial-dot.active {
+    width: 24px;
+    border-radius: 4px;
+    background: {{ section.settings.accent_color }};
+  }
+  
+  /* Action buttons */
+  #shopify-section-{{ section.id }} .pr-tutorial-actions {
+    display: flex;
+    gap: 12px;
+    padding: 0 24px 24px;
+  }
+  
+  #shopify-section-{{ section.id }} .pr-tutorial-skip {
+    flex: 1;
+    padding: 12px 20px;
+    background: transparent;
+    border: 1px solid {{ section.settings.border_color }};
+    color: {{ section.settings.text_color }};
+    border-radius: 8px;
+    font-family: var(--font-body-family);
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  #shopify-section-{{ section.id }} .pr-tutorial-skip:hover {
+    background: {{ section.settings.border_color }}20;
+  }
+  
+  #shopify-section-{{ section.id }} .pr-tutorial-action-btn {
+    flex: 2;
+    padding: 12px 20px;
+    background: {{ section.settings.button_bg }};
+    color: {{ section.settings.button_text }};
+    border: none;
+    border-radius: 8px;
+    font-family: var(--font-body-family);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  #shopify-section-{{ section.id }} .pr-tutorial-action-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px {{ section.settings.button_bg }}40;
+  }
+  
+  #shopify-section-{{ section.id }} .pr-tutorial-action-btn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+  }
+  
+  #shopify-section-{{ section.id }} .pr-tutorial-action-btn:active::after {
+    width: 300px;
+    height: 300px;
+  }
+  
+  /* Arrow pointer */
+  #shopify-section-{{ section.id }} .pr-tutorial-arrow {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    transition: all 0.3s ease;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+  }
+  
+  #shopify-section-{{ section.id }} .pr-tutorial-arrow svg {
+    width: 100%;
+    height: 100%;
+  }
+  
+  /* Trigger button */
+  #shopify-section-{{ section.id }} .pr-tutorial-trigger-wrapper {
+    text-align: center;
+  }
+  
+  #shopify-section-{{ section.id }} .pr-tutorial-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  
+  /* Highlighted element styles */
+  .pr-tutorial-highlight {
+    position: relative !important;
+    z-index: 99998 !important;
+    animation: pr-glow 2s ease-in-out infinite;
+  }
+  
+  /* Mobile optimizations */
+  @media (max-width: 768px) {
+    #shopify-section-{{ section.id }} .pr-tutorial-popup {
+      width: calc(100vw - 24px);
+      max-height: 85vh;
+      overflow-y: auto;
+      bottom: 12px;
+      left: 12px;
+      right: 12px;
+      top: auto;
+      transform: none;
+    }
+    
+    #shopify-section-{{ section.id }} .pr-tutorial-popup[style*="position: fixed"] {
+      bottom: auto;
+      left: 50% !important;
+      top: 50% !important;
+      right: auto;
+      transform: translate(-50%, -50%) !important;
+    }
+    
+    #shopify-section-{{ section.id }} .pr-tutorial-content {
+      padding: 20px;
+    }
+    
+    #shopify-section-{{ section.id }} .pr-tutorial-title {
+      font-size: 22px;
+    }
+    
+    #shopify-section-{{ section.id }} .pr-tutorial-description {
+      font-size: 15px;
+    }
+    
+    #shopify-section-{{ section.id }} .pr-tutorial-media {
+      margin: 16px -20px;
+    }
+    
+    #shopify-section-{{ section.id }} .pr-tutorial-actions {
+      flex-direction: row;
+      gap: 8px;
+    }
+    
+    #shopify-section-{{ section.id }} .pr-tutorial-skip {
+      padding: 12px 16px;
+    }
+    
+    #shopify-section-{{ section.id }} .pr-tutorial-skip span {
+      display: none;
+    }
+    
+    #shopify-section-{{ section.id }} .pr-tutorial-action-btn {
+      padding: 14px 20px;
+    }
+  }
+  
+  /* Animations */
+  @keyframes pr-bounceIn {
+    0% {
+      opacity: 0;
+      transform: scale(0.8) translateY(30px);
+    }
+    60% {
+      transform: scale(1.05) translateY(-5px);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+  
+  @keyframes pr-slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes pr-slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes pr-fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes pr-glow {
+    0%, 100% {
+      box-shadow: 0 0 20px {{ section.settings.glow_color }}60,
+                  0 0 40px {{ section.settings.glow_color }}40,
+                  0 0 60px {{ section.settings.glow_color }}20;
+    }
+    50% {
+      box-shadow: 0 0 30px {{ section.settings.glow_color }}80,
+                  0 0 60px {{ section.settings.glow_color }}60,
+                  0 0 90px {{ section.settings.glow_color }}40;
+    }
+  }
+  
+  @keyframes pr-pulse {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+  }
+  
+  @keyframes pr-bounce {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-5px);
+    }
+  }
+  
+  @keyframes pr-wave {
+    0%, 100% {
+      transform: rotate(0deg);
+    }
+    25% {
+      transform: rotate(-15deg);
+    }
+    75% {
+      transform: rotate(15deg);
+    }
+  }
+  
+  @keyframes pr-point {
+    0%, 100% {
+      transform: translateX(0);
+    }
+    50% {
+      transform: translateX(-5px);
+    }
+  }
+  
+  @keyframes pr-confetti-fall {
+    0% {
+      transform: translateY(-100vh) rotate(0deg);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(100vh) rotate(720deg);
+      opacity: 0;
+    }
+  }
+  
+  /* Base responsive styles */
+  @media only screen and (min-width:769px){
+    #shopify-section-{{ section.id }} {
+      max-width: {{section.settings.max_dimensione}};
+      margin: 0 auto;
+    }
+
+    #shopify-section-{{ section.id }} {
+      padding-top: {{section.settings.padding_top_desktop}}px;
+      padding-bottom: {{section.settings.padding_bottom_desktop}}px;
+      margin-top: {{section.settings.margin_top_desktop}}px;
+      margin-bottom: {{section.settings.margin_bottom_desktop}}px;
+    }
+
+    {% if section.settings.nascondi_desktop %}
+      #shopify-section-{{ section.id }}{
+        display:none;
+      }
+    {% endif %}
+  }
+
+  @media only screen and (max-width:768px){
+    #shopify-section-{{ section.id }} {
+      padding-top: {{section.settings.padding_top_mobile}}px;
+      padding-bottom: {{section.settings.padding_bottom_mobile}}px;
+      margin-top: {{section.settings.margin_top_mobile}}px;
+      margin-bottom: {{section.settings.margin_bottom_mobile}}px;
+    }
+
+    {% if section.settings.nascondi_mobile %}
+      #shopify-section-{{ section.id }}{
+        display:none;
+      }
+    {% endif %}
+  }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const sectionId = '{{ section.id }}';
+  const overlay = document.getElementById(`pr-tutorial-overlay-${sectionId}`);
+  const popup = overlay.querySelector('.pr-tutorial-popup');
+  const trigger = document.querySelector(`#shopify-section-${sectionId} .pr-tutorial-trigger`);
+  const closeBtn = overlay.querySelector('.pr-tutorial-close');
+  const skipBtn = overlay.querySelector('.pr-tutorial-skip');
+  const prevBtn = overlay.querySelector('.pr-tutorial-prev');
+  const nextBtn = overlay.querySelector('.pr-tutorial-next');
+  const continueBtn = overlay.querySelector('.pr-tutorial-continue');
+  const steps = overlay.querySelectorAll('.pr-tutorial-step');
+  const dots = overlay.querySelectorAll('.pr-tutorial-dot');
+  const progressFill = overlay.querySelector('.pr-tutorial-progress-fill');
+  const spotlightHole = overlay.querySelector('.pr-spotlight-hole');
+  const arrow = overlay.querySelector('.pr-tutorial-arrow');
+  
+  let currentStep = 1;
+  const totalSteps = steps.length;
+  let currentTarget = null;
+  
+  // Initialize
+  {% if section.settings.auto_show %}
+    const hasSeenTutorial = localStorage.getItem('pr-tutorial-seen-{{ section.id }}');
+    if (!hasSeenTutorial) {
+      setTimeout(() => {
+        showTutorial();
+      }, {{ section.settings.auto_show_delay }} * 1000);
+    }
+  {% endif %}
+  
+  // Show tutorial
+  function showTutorial() {
+    overlay.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+    currentStep = 1;
+    updateStep();
+  }
+  
+  // Hide tutorial
+  function hideTutorial() {
+    overlay.style.display = 'none';
+    document.body.style.overflow = '';
+    clearHighlight();
+    
+    {% if section.settings.remember_seen %}
+      localStorage.setItem('pr-tutorial-seen-{{ section.id }}', 'true');
+    {% endif %}
+  }
+  
+  // Update step
+  function updateStep() {
+    // Hide all steps
+    steps.forEach(step => step.style.display = 'none');
+    
+    // Show current step
+    const currentStepEl = steps[currentStep - 1];
+    if (currentStepEl) {
+      currentStepEl.style.display = 'block';
+      
+      // Update progress
+      const progress = (currentStep / totalSteps) * 100;
+      progressFill.style.width = `${progress}%`;
+      
+      // Update dots
+      dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === currentStep - 1);
+      });
+      
+      // Update navigation
+      prevBtn.disabled = currentStep === 1;
+      nextBtn.disabled = currentStep === totalSteps;
+      nextBtn.style.display = currentStep === totalSteps ? 'none' : 'flex';
+      continueBtn.textContent = currentStep === totalSteps ? 'Completa' : 'Continua';
+      
+      // Highlight target element
+      const targetClass = currentStepEl.dataset.target;
+      const position = currentStepEl.dataset.position || 'right';
+      
+      if (targetClass) {
+        highlightElement(targetClass, position);
+      } else {
+        clearHighlight();
+        positionPopupCenter();
+      }
+    }
+  }
+  
+  // Highlight element with spotlight
+  function highlightElement(targetClass, position) {
+    clearHighlight();
+    
+    const elements = document.querySelectorAll(`.${targetClass}`);
+    if (elements.length > 0) {
+      currentTarget = elements[0];
+      currentTarget.classList.add('pr-tutorial-highlight');
+      
+      // Get element position
+      const rect = currentTarget.getBoundingClientRect();
+      const padding = 8;
+      
+      // Update spotlight hole
+      spotlightHole.setAttribute('x', rect.left - padding);
+      spotlightHole.setAttribute('y', rect.top - padding);
+      spotlightHole.setAttribute('width', rect.width + (padding * 2));
+      spotlightHole.setAttribute('height', rect.height + (padding * 2));
+      
+      // Scroll into view if needed
+      if (rect.top < 100 || rect.bottom > window.innerHeight - 100) {
+        currentTarget.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        
+        // Reposition after scroll
+        setTimeout(() => {
+          const newRect = currentTarget.getBoundingClientRect();
+          spotlightHole.setAttribute('x', newRect.left - padding);
+          spotlightHole.setAttribute('y', newRect.top - padding);
+          positionPopup(newRect, position);
+        }, 500);
+      } else {
+        positionPopup(rect, position);
+      }
+    }
+  }
+  
+  // Position popup relative to target
+  function positionPopup(targetRect, position) {
+    const popupRect = popup.getBoundingClientRect();
+    const spacing = 20;
+    const arrowSize = 24;
+    const arrowOffset = {{ section.settings.arrow_offset }};
+    let left, top, arrowLeft, arrowTop, arrowRotation;
+    
+    // Calculate centered positions based on preference
+    switch (position) {
+      case 'top':
+        left = targetRect.left + (targetRect.width / 2) - (popupRect.width / 2);
+        top = targetRect.top - popupRect.height - spacing - arrowSize;
+        arrowLeft = targetRect.left + (targetRect.width / 2) - (arrowSize / 2) + arrowOffset;
+        arrowTop = targetRect.top - arrowSize - spacing;
+        arrowRotation = 90;
+        break;
+        
+      case 'bottom':
+        left = targetRect.left + (targetRect.width / 2) - (popupRect.width / 2);
+        top = targetRect.bottom + spacing + arrowSize;
+        arrowLeft = targetRect.left + (targetRect.width / 2) - (arrowSize / 2) + arrowOffset;
+        arrowTop = targetRect.bottom + spacing;
+        arrowRotation = -90;
+        break;
+        
+      case 'left':
+        left = targetRect.left - popupRect.width - spacing - arrowSize;
+        top = targetRect.top + (targetRect.height / 2) - (popupRect.height / 2);
+        arrowLeft = targetRect.left - arrowSize - spacing;
+        arrowTop = targetRect.top + (targetRect.height / 2) - (arrowSize / 2) + arrowOffset;
+        arrowRotation = 180;
+        break;
+        
+      case 'right':
+      default:
+        left = targetRect.right + spacing + arrowSize;
+        top = targetRect.top + (targetRect.height / 2) - (popupRect.height / 2);
+        arrowLeft = targetRect.right + spacing;
+        arrowTop = targetRect.top + (targetRect.height / 2) - (arrowSize / 2) + arrowOffset;
+        arrowRotation = 0;
+        break;
+    }
+    
+    // Boundary checks
+    const margin = 16;
+    left = Math.max(margin, Math.min(left, window.innerWidth - popupRect.width - margin));
+    top = Math.max(margin, Math.min(top, window.innerHeight - popupRect.height - margin));
+    
+    // Apply positions
+    popup.style.left = `${left}px`;
+    popup.style.top = `${top}px`;
+    popup.style.transform = 'none';
+    popup.dataset.position = position;
+    
+    // Position arrow
+    arrow.style.display = 'block';
+    arrow.style.left = `${arrowLeft}px`;
+    arrow.style.top = `${arrowTop}px`;
+    arrow.style.transform = `rotate(${arrowRotation}deg)`;
+  }
+  
+  // Position popup in center when no target
+  function positionPopupCenter() {
+    popup.style.position = 'fixed';
+    popup.style.left = '50%';
+    popup.style.top = '50%';
+    popup.style.transform = 'translate(-50%, -50%)';
+    arrow.style.display = 'none';
+    
+    // Clear spotlight
+    spotlightHole.setAttribute('width', 0);
+    spotlightHole.setAttribute('height', 0);
+  }
+  
+  // Clear highlight
+  function clearHighlight() {
+    if (currentTarget) {
+      currentTarget.classList.remove('pr-tutorial-highlight');
+      currentTarget = null;
+    }
+  }
+  
+  // Create confetti effect
+  function createConfetti() {
+    const container = overlay.querySelector('.pr-confetti-container');
+    const colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A', '#98D8C8', '#F7DC6F', '#BB8FCE'];
+    const confettiCount = 150;
+    
+    for (let i = 0; i < confettiCount; i++) {
+      setTimeout(() => {
+        const confetti = document.createElement('div');
+        confetti.className = 'pr-confetti';
+        confetti.style.left = Math.random() * 100 + '%';
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.width = (Math.random() * 10 + 5) + 'px';
+        confetti.style.height = confetti.style.width;
+        confetti.style.animationDelay = Math.random() * 0.5 + 's';
+        confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+        
+        container.appendChild(confetti);
+        
+        setTimeout(() => {
+          confetti.remove();
+        }, 4000);
+      }, i * 10);
+    }
+  }
+  
+  // Event listeners
+  if (trigger) {
+    trigger.addEventListener('click', showTutorial);
+  }
+  
+  closeBtn.addEventListener('click', hideTutorial);
+  skipBtn.addEventListener('click', hideTutorial);
+  
+  prevBtn.addEventListener('click', () => {
+    if (currentStep > 1) {
+      currentStep--;
+      updateStep();
+    }
+  });
+  
+  nextBtn.addEventListener('click', () => {
+    if (currentStep < totalSteps) {
+      currentStep++;
+      updateStep();
+    }
+  });
+  
+  continueBtn.addEventListener('click', () => {
+    if (currentStep < totalSteps) {
+      currentStep++;
+      updateStep();
+    } else {
+      hideTutorial();
+    }
+  });
+  
+  // Dot navigation
+  dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+      currentStep = index + 1;
+      updateStep();
+    });
+  });
+  
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (overlay.style.display === 'block') {
+      switch (e.key) {
+        case 'Escape':
+          hideTutorial();
+          break;
+        case 'ArrowLeft':
+          if (currentStep > 1) {
+            currentStep--;
+            updateStep();
+          }
+          break;
+        case 'ArrowRight':
+          if (currentStep < totalSteps) {
+            currentStep++;
+            updateStep();
+          }
+          break;
+      }
+    }
+  });
+  
+  // Window resize handler
+  let resizeTimeout;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+      if (overlay.style.display === 'block' && currentTarget) {
+        updateStep();
+      }
+    }, 250);
+  });
+});
+</script>
+
+{% schema %}
+{
+  "name": "Tutorial Overlay Pro",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Impostazioni Tutorial"
+    },
+    {
+      "type": "checkbox",
+      "id": "auto_show",
+      "label": "Mostra automaticamente",
+      "default": false,
+      "info": "Mostra il tutorial al primo caricamento"
+    },
+    {
+      "type": "range",
+      "id": "auto_show_delay",
+      "label": "Ritardo auto-show",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "default": 2,
+      "unit": "sec"
+    },
+    {
+      "type": "checkbox",
+      "id": "remember_seen",
+      "label": "Mostra solo una volta",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Pulsante Trigger"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_trigger",
+      "label": "Mostra pulsante",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "trigger_text",
+      "label": "Testo pulsante",
+      "default": "Come funziona"
+    },
+    {
+      "type": "checkbox",
+      "id": "trigger_icon",
+      "label": "Mostra icona",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "trigger_style",
+      "label": "Stile pulsante",
+      "options": [
+        {
+          "value": "minimal",
+          "label": "Minimale"
+        },
+        {
+          "value": "outline",
+          "label": "Contorno"
+        },
+        {
+          "value": "filled",
+          "label": "Pieno"
+        },
+        {
+          "value": "custom",
+          "label": "Personalizzato"
+        }
+      ],
+      "default": "outline"
+    },
+    {
+      "type": "color",
+      "id": "trigger_text_color",
+      "label": "Colore testo trigger",
+      "default": "#3E491C"
+    },
+    {
+      "type": "color",
+      "id": "trigger_border_color",
+      "label": "Colore bordo trigger",
+      "default": "#3E491C"
+    },
+    {
+      "type": "color",
+      "id": "trigger_bg_color",
+      "label": "Sfondo trigger",
+      "default": "#3E491C"
+    },
+    {
+      "type": "header",
+      "content": "Trigger Personalizzato"
+    },
+    {
+      "type": "color",
+      "id": "custom_trigger_bg",
+      "label": "Sfondo custom",
+      "default": "#FFF5EA"
+    },
+    {
+      "type": "color",
+      "id": "custom_trigger_text_color",
+      "label": "Testo custom",
+      "default": "#3E491C"
+    },
+    {
+      "type": "color",
+      "id": "custom_trigger_border_color",
+      "label": "Bordo custom",
+      "default": "#F3A2A5"
+    },
+    {
+      "type": "range",
+      "id": "custom_trigger_border_width",
+      "label": "Spessore bordo",
+      "min": 0,
+      "max": 5,
+      "step": 1,
+      "default": 2,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "custom_trigger_radius",
+      "label": "Raggio bordi",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "default": 8,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "custom_trigger_padding_x",
+      "label": "Padding orizzontale",
+      "min": 8,
+      "max": 48,
+      "step": 2,
+      "default": 24,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "custom_trigger_padding_y",
+      "label": "Padding verticale",
+      "min": 4,
+      "max": 24,
+      "step": 2,
+      "default": 12,
+      "unit": "px"
+    },
+    {
+      "type": "text",
+      "id": "custom_trigger_shadow",
+      "label": "Ombra (CSS)",
+      "default": "0 2px 10px rgba(0,0,0,0.1)"
+    },
+    {
+      "type": "color",
+      "id": "custom_trigger_hover_bg",
+      "label": "Sfondo hover",
+      "default": "#FADADA"
+    },
+    {
+      "type": "color",
+      "id": "custom_trigger_hover_text",
+      "label": "Testo hover",
+      "default": "#3E491C"
+    },
+    {
+      "type": "range",
+      "id": "custom_trigger_hover_scale",
+      "label": "Scala hover",
+      "min": 0.9,
+      "max": 1.2,
+      "step": 0.1,
+      "default": 1.1
+    },
+    {
+      "type": "header",
+      "content": "Impostazioni Avanzate"
+    },
+    {
+      "type": "range",
+      "id": "arrow_offset",
+      "label": "Offset freccia",
+      "min": -100,
+      "max": 100,
+      "step": 5,
+      "default": 0,
+      "unit": "px",
+      "info": "Sposta la freccia rispetto al centro"
+    },
+    {
+      "type": "color",
+      "id": "glow_color",
+      "label": "Colore alone",
+      "default": "#F3A2A5",
+      "info": "Colore dell'alone intorno all'elemento"
+    },
+    {
+      "type": "color",
+      "id": "arrow_color",
+      "label": "Colore freccia",
+      "default": "#F3A2A5"
+    },
+    {
+      "type": "header",
+      "content": "Colori Tutorial"
+    },
+    {
+      "type": "color",
+      "id": "popup_bg",
+      "label": "Sfondo popup",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "header_bg",
+      "label": "Sfondo header",
+      "default": "#FFF5EA"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Colore titoli",
+      "default": "#3E491C"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Colore testo",
+      "default": "#391B1C"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Colore accento",
+      "default": "#F3A2A5"
+    },
+    {
+      "type": "color",
+      "id": "button_bg",
+      "label": "Sfondo pulsanti",
+      "default": "#3E491C"
+    },
+    {
+      "type": "color",
+      "id": "button_text",
+      "label": "Testo pulsanti",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "nav_bg",
+      "label": "Sfondo navigazione",
+      "default": "#E0E0E0"
+    },
+    {
+      "type": "color",
+      "id": "nav_color",
+      "label": "Colore navigazione",
+      "default": "#666666"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Colore bordi",
+      "default": "#E0E0E0"
+    },
+    {
+      "type": "checkbox",
+      "id": "nascondi_mobile",
+      "label": "Nascondi sezione da Mobile",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "nascondi_desktop",
+      "label": "Nascondi sezione da desktop",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top Mobile",
+      "default": 0,
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom Mobile",
+      "default": 0,
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Padding Top Desktop",
+      "default": 0,
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Padding Bottom Desktop",
+      "default": 0,
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "margin_top_mobile",
+      "label": "Margin Top Mobile",
+      "default": 0,
+      "min": -100,
+      "max": 100,
+      "step": 2,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_mobile",
+      "label": "Margin Bottom Mobile",
+      "default": 0,
+      "min": -100,
+      "max": 100,
+      "step": 2,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "margin_top_desktop",
+      "label": "Margin Top Desktop",
+      "default": 0,
+      "min": -200,
+      "max": 200,
+      "step": 4,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_desktop",
+      "label": "Margin Bottom Desktop",
+      "default": 0,
+      "min": -200,
+      "max": 200,
+      "step": 4,
+      "unit": "px"
+    },
+    {
+      "type": "select",
+      "id": "max_dimensione",
+      "label": "Larghezza Massima Desktop",
+      "options": [
+        {
+          "value": "none",
+          "label": "100%"
+        },
+        {
+          "value": "1400px",
+          "label": "1400px"
+        },
+        {
+          "value": "1300px",
+          "label": "1300px"
+        },
+        {
+          "value": "1200px",
+          "label": "1200px"
+        },
+        {
+          "value": "1100px",
+          "label": "1100px"
+        },
+        {
+          "value": "1000px",
+          "label": "1000px"
+        },
+        {
+          "value": "900px",
+          "label": "900px"
+        },
+        {
+          "value": "800px",
+          "label": "800px"
+        },
+        {
+          "value": "700px",
+          "label": "700px"
+        }
+      ],
+      "default": "1200px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step Tutorial",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Titolo step",
+          "default": "Personalizza il tuo gioiello"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Descrizione step",
+          "default": "<p>Aggiungi i <strong>charm</strong> che preferisci per creare un gioiello <em>unico</em>!</p>"
+        },
+        {
+          "type": "text",
+          "id": "step_emoji",
+          "label": "Emoji step",
+          "default": "✨",
+          "info": "Emoji mostrata nel badge"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Immagine (opzionale)"
+        },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video (opzionale)",
+          "info": "Ha priorità sull'immagine"
+        },
+        {
+          "type": "text",
+          "id": "target_class",
+          "label": "Classe CSS target",
+          "info": "L'elemento da evidenziare"
+        },
+        {
+          "type": "select",
+          "id": "position",
+          "label": "Posizione popup",
+          "options": [
+            {
+              "value": "top",
+              "label": "Sopra"
+            },
+            {
+              "value": "right",
+              "label": "Destra"
+            },
+            {
+              "value": "bottom",
+              "label": "Sotto"
+            },
+            {
+              "value": "left",
+              "label": "Sinistra"
+            }
+          ],
+          "default": "right",
+          "info": "Dove posizionare il popup"
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_confetti",
+          "label": "Abilita confetti",
+          "default": false,
+          "info": "Mostra confetti per questo step"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Tutorial Overlay Pro",
+      "category": "Paolina custom",
+      "settings": {
+        "trigger_style": "outline",
+        "trigger_text": "Come funziona",
+        "trigger_icon": true
+      },
+      "blocks": [
+        {
+          "type": "step",
+          "settings": {
+            "title": "Ciao bellissima! 💖",
+            "description": "<p>Benvenuta nel <strong>charm bar</strong> più cool di Roma! Pronta a creare il tuo gioiello <em>unico e personalizzato</em>?</p>",
+            "step_emoji": "👋",
+            "position": "right"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "title": "Scegli la tua base ✨",
+            "description": "<p>Prima cosa: scegli se vuoi un <strong>bracciale</strong>, una <strong>collana</strong> o degli <strong>orecchini</strong>. Ogni base è perfetta per i nostri charm!</p>",
+            "step_emoji": "💍",
+            "target_class": "product-form__input",
+            "position": "bottom"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "title": "È ora di scegliere i charm! 🎨",
+            "description": "<p>Questa è la parte più <strong>divertente</strong>! Clicca sui charm che ami di più e <em>trascinali</em> per metterli nell'ordine che preferisci.</p>",
+            "step_emoji": "🌟",
+            "target_class": "charm-selector",
+            "position": "top"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "title": "Bravissima! 🎉",
+            "description": "<p>Il tuo gioiello è <strong>pronto</strong>! Clicca su <em>Aggiungi al carrello</em> e preparati a riceverlo. Non vediamo l'ora di crearlo per te! 💕</p>",
+            "step_emoji": "🎊",
+            "target_class": "product-form__submit",
+            "position": "top",
+            "enable_confetti": true
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

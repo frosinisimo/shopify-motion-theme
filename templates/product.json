@@ -9,6 +9,109 @@
  */
 {
   "sections": {
+    "overlay_tutorial_Xw9PTH": {
+      "type": "overlay-tutorial",
+      "blocks": {
+        "step_eba8HX": {
+          "type": "step",
+          "settings": {
+            "title": "Ciao bellissima! 💖",
+            "description": "<p>Benvenuta nel <strong>charm bar</strong> più cool di Roma! Pronta a creare il tuo gioiello <em>unico e personalizzato</em>?</p>",
+            "step_emoji": "👋",
+            "target_class": "",
+            "position": "right",
+            "enable_confetti": false
+          }
+        },
+        "step_L7dGCd": {
+          "type": "step",
+          "settings": {
+            "title": "Scegli la tua base ✨",
+            "description": "<p>Prima cosa: scegli se vuoi un <strong>bracciale</strong>, una <strong>collana</strong> o degli <strong>orecchini</strong>. Ogni base è perfetta per i nostri charm!</p>",
+            "step_emoji": "💍",
+            "target_class": "product-single__title",
+            "position": "bottom",
+            "enable_confetti": false
+          }
+        },
+        "step_megVmq": {
+          "type": "step",
+          "settings": {
+            "title": "È ora di scegliere i charm! 🎨",
+            "description": "<p>Questa è la parte più <strong>divertente</strong>! Clicca sui charm che ami di più e <em>trascinali</em> per metterli nell'ordine che preferisci.</p>",
+            "step_emoji": "🌟",
+            "target_class": "charm-selector",
+            "position": "top",
+            "enable_confetti": false
+          }
+        },
+        "step_bD4zkC": {
+          "type": "step",
+          "settings": {
+            "title": "Bravissima! 🎉",
+            "description": "<p>Il tuo gioiello è <strong>pronto</strong>! Clicca su <em>Aggiungi al carrello</em> e preparati a riceverlo. Non vediamo l'ora di crearlo per te! 💕</p>",
+            "step_emoji": "🎊",
+            "target_class": "product-form__submit",
+            "position": "top",
+            "enable_confetti": true
+          }
+        }
+      },
+      "block_order": [
+        "step_eba8HX",
+        "step_L7dGCd",
+        "step_megVmq",
+        "step_bD4zkC"
+      ],
+      "name": "Tutorial Overlay Pro",
+      "settings": {
+        "auto_show": false,
+        "auto_show_delay": 2,
+        "remember_seen": true,
+        "show_trigger": true,
+        "trigger_text": "Come funziona",
+        "trigger_icon": true,
+        "trigger_style": "outline",
+        "trigger_text_color": "#3E491C",
+        "trigger_border_color": "#3E491C",
+        "trigger_bg_color": "#3E491C",
+        "custom_trigger_bg": "#FFF5EA",
+        "custom_trigger_text_color": "#3E491C",
+        "custom_trigger_border_color": "#F3A2A5",
+        "custom_trigger_border_width": 2,
+        "custom_trigger_radius": 8,
+        "custom_trigger_padding_x": 24,
+        "custom_trigger_padding_y": 12,
+        "custom_trigger_shadow": "0 2px 10px rgba(0,0,0,0.1)",
+        "custom_trigger_hover_bg": "#FADADA",
+        "custom_trigger_hover_text": "#3E491C",
+        "custom_trigger_hover_scale": 1.1,
+        "arrow_offset": 0,
+        "glow_color": "#F3A2A5",
+        "arrow_color": "#F3A2A5",
+        "popup_bg": "#FFFFFF",
+        "header_bg": "#FFF5EA",
+        "title_color": "#3E491C",
+        "text_color": "#391B1C",
+        "accent_color": "#F3A2A5",
+        "button_bg": "#3E491C",
+        "button_text": "#FFFFFF",
+        "nav_bg": "#E0E0E0",
+        "nav_color": "#666666",
+        "border_color": "#E0E0E0",
+        "nascondi_mobile": false,
+        "nascondi_desktop": false,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0,
+        "padding_top_desktop": 0,
+        "padding_bottom_desktop": 0,
+        "margin_top_mobile": 0,
+        "margin_bottom_mobile": 0,
+        "margin_top_desktop": 0,
+        "margin_bottom_desktop": 0,
+        "max_dimensione": "1200px"
+      }
+    },
     "main": {
       "type": "main-product",
       "blocks": {
@@ -25,6 +128,7 @@
           "settings": {
             "variant_labels": true,
             "picker_type": "button",
+            "product_dynamic_variants_enable": true,
             "color_swatches": true
           }
         },
@@ -46,7 +150,8 @@
           "type": "buy_buttons",
           "settings": {
             "show_dynamic_checkout": true,
-            "surface_pickup_enable": true
+            "surface_pickup_enable": true,
+            "show_gift_card_recipient": false
           }
         },
         "description": {
@@ -59,7 +164,8 @@
           "type": "tab",
           "settings": {
             "title": "Size guide",
-            "content": ""
+            "content": "",
+            "page": ""
           }
         },
         "contact": {
@@ -91,6 +197,7 @@
         "image_size": "large",
         "product_zoom_enable": true,
         "thumbnail_position": "beside",
+        "thumbnail_height": "flexible",
         "thumbnail_arrows": false,
         "enable_video_looping": true,
         "product_video_style": "muted"
@@ -98,23 +205,59 @@
     },
     "sub": {
       "type": "product-full-width",
-      "settings": {}
+      "settings": {
+        "max_width": true
+      }
     },
     "product-recommendations": {
       "type": "product-recommendations",
+      "disabled": true,
       "settings": {
-        "related_count": 4
+        "product_recommendations_heading": "You may also like",
+        "related_count": 4,
+        "products_per_row": 3
       }
     },
     "collection-return": {
       "type": "collection-return",
+      "disabled": true,
       "settings": {}
+    },
+    "picture_in_picture_PftgG8": {
+      "type": "picture-in-picture",
+      "disabled": true,
+      "name": "Video PiP Draggable",
+      "settings": {
+        "video_url": "https://cdn.shopify.com/videos/c/o/v/63d549fa92f5475e8f6aa60314f10d17.mp4",
+        "autoplay": true,
+        "show_controls": false,
+        "remember_close": false,
+        "initial_position": "bottom-left",
+        "video_size": "medium",
+        "distance_top_desktop": 20,
+        "distance_bottom_desktop": 20,
+        "distance_left_desktop": 20,
+        "distance_right_desktop": 20,
+        "distance_top_mobile": 10,
+        "distance_bottom_mobile": 10,
+        "distance_left_mobile": 10,
+        "distance_right_mobile": 10,
+        "border_radius": 16,
+        "background_color": "#000000",
+        "border_width": 1,
+        "border_color": "#3e491c",
+        "z_index": 50,
+        "hide_mobile": false,
+        "hide_desktop": false
+      }
     }
   },
   "order": [
+    "overlay_tutorial_Xw9PTH",
     "main",
     "sub",
     "product-recommendations",
-    "collection-return"
+    "collection-return",
+    "picture_in_picture_PftgG8"
   ]
 }
